@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockLive", "DockLive\DockLive.csproj", "{1EA7CA9A-1200-4D29-B914-3D0C62A2F356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pWonders.Win32", "..\..\pWonders.Lib\Win32\pWonders.Win32.csproj", "{CC327F64-B393-4DF1-9CC1-F2D082270DDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calendar", "Tiles\Calendar\Calendar.csproj", "{E0C64A94-40C8-455B-906E-1D8CDE413EE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pWonders", "..\..\pWonders.Lib\pWonders\pWonders.csproj", "{E46B7A27-B1AA-4658-9936-CCAFD1AA56E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockLiveTileInterface", "DockLiveTileInterface\DockLiveTileInterface.csproj", "{BBD765C9-415A-4971-ABF6-C9E025EBEF54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pWonders.Windows.Forms", "..\..\pWonders.Lib\Windows.Forms\pWonders.Windows.Forms.csproj", "{2D900F44-D6BF-4D8A-B098-97B37A9F2803}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EA7CA9A-1200-4D29-B914-3D0C62A2F356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA7CA9A-1200-4D29-B914-3D0C62A2F356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA7CA9A-1200-4D29-B914-3D0C62A2F356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA7CA9A-1200-4D29-B914-3D0C62A2F356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC327F64-B393-4DF1-9CC1-F2D082270DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC327F64-B393-4DF1-9CC1-F2D082270DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC327F64-B393-4DF1-9CC1-F2D082270DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC327F64-B393-4DF1-9CC1-F2D082270DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C64A94-40C8-455B-906E-1D8CDE413EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C64A94-40C8-455B-906E-1D8CDE413EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C64A94-40C8-455B-906E-1D8CDE413EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C64A94-40C8-455B-906E-1D8CDE413EE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E46B7A27-B1AA-4658-9936-CCAFD1AA56E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E46B7A27-B1AA-4658-9936-CCAFD1AA56E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E46B7A27-B1AA-4658-9936-CCAFD1AA56E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E46B7A27-B1AA-4658-9936-CCAFD1AA56E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD765C9-415A-4971-ABF6-C9E025EBEF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD765C9-415A-4971-ABF6-C9E025EBEF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD765C9-415A-4971-ABF6-C9E025EBEF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD765C9-415A-4971-ABF6-C9E025EBEF54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
