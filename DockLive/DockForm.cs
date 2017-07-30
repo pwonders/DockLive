@@ -252,6 +252,8 @@ namespace pWonders.App.DockLive
 				else
 				{
 					m_FirstShow = true;
+					// FIXME: doesn't always work.
+					this.Activate();
 					m_Animator.BeginAutoShow();
 				}
 			}
