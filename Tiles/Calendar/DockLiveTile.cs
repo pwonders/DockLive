@@ -8,9 +8,6 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		public DockLiveTile()
 		{
 			m_Control = new CalendarControl();
-			m_Control.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-			m_Control.AutoValidate = AutoValidate.Disable;
-			m_Control.CausesValidation = false;
 		}
 
 		public string Name
@@ -36,7 +33,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		public void OnAttachTile(ITileHost host)
 		{
 			m_Host = host;
-			//m_Control.Theme = m_Host.Theme;
+			m_Control.Theme = m_Host.Theme;
 			m_Control.Size = new System.Drawing.Size(m_Host.FullBounds.Width, 2000);
 		}
 
