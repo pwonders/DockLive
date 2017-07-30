@@ -252,8 +252,6 @@ namespace pWonders.App.DockLive
 				else
 				{
 					m_FirstShow = true;
-					// FIXME: doesn't always work.
-					this.Activate();
 					m_Animator.BeginAutoShow();
 				}
 			}
@@ -276,6 +274,8 @@ namespace pWonders.App.DockLive
 		private void Animator_ShowEnded(object sender, EventArgs e)
 		{
 			notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.trayicon_shown;
+			// https://blogs.msdn.microsoft.com/oldnewthing/20080801-00/?p=21393/
+			this.Activate();
 		}
 	}
 }
