@@ -48,9 +48,6 @@ namespace pWonders.App.DockLive
 			begin_autohide();
 		}
 
-
-		// TODO: make this variable depends on screen size.
-		const int SPEED_ANIMATE = 64;
 		const int EDGE_TOLERANCE = 4;
 
 		DockForm m_Form;
@@ -59,7 +56,7 @@ namespace pWonders.App.DockLive
 		DateTime m_AutoShowTriggeredTime, m_AutoHideTriggeredTime;
 		bool m_AutoShowing, m_AutoHiding;
 		DateTime m_LastAnimateTime;
-		int m_AnimateSpeed, m_AnimateStep;
+		int m_AnimateStep;
 
 		protected void OnShowEnded(EventArgs e)
 		{
@@ -107,24 +104,15 @@ namespace pWonders.App.DockLive
 			{
 				m_LastAnimateTime = DateTime.Now;
 				Rectangle rect = Desktop.Screen.WorkingArea;
+				int speed;
 				if (m_AutoShowing)
 				{
-					while (true)
+					speed = (m_Form.FullWidth - m_Form.Width) / 4;
+					if (speed < 1)
 					{
-						// Make sure the next increment won't exceed the target.
-						if (m_AnimateStep + m_AnimateSpeed <= m_Form.FullWidth)
-						{
-							break;
-						}
-						// Decelerate if close to target.
-						m_AnimateSpeed /= 8;
-						if (m_AnimateSpeed < 1)
-						{
-							m_AnimateSpeed = 1;
-							break;
-						}
+						speed = 1;
 					}
-					m_AnimateStep += m_AnimateSpeed;
+					m_AnimateStep += speed;
 					m_Form.SetBounds(rect.Right - m_AnimateStep, rect.Top, m_AnimateStep, rect.Height);
 					if (m_AnimateStep >= m_Form.FullWidth)
 					{
@@ -133,22 +121,12 @@ namespace pWonders.App.DockLive
 				}
 				else if (m_AutoHiding)
 				{
-					while (true)
+					speed = m_Form.Width / 4;
+					if (speed < 1)
 					{
-						// Make sure the next decrement won't go negative.
-						if (m_AnimateStep - m_AnimateSpeed >= 0)
-						{
-							break;
-						}
-						// Decelerate if close to target.
-						m_AnimateSpeed /= 8;
-						if (m_AnimateSpeed < 1)
-						{
-							m_AnimateSpeed = 1;
-							break;
-						}
+						speed = 1;
 					}
-					m_AnimateStep -= m_AnimateSpeed;
+					m_AnimateStep -= speed;
 					m_Form.SetBounds(rect.Right - m_AnimateStep, rect.Top, m_AnimateStep, rect.Height);
 					if (m_AnimateStep <= 0)
 					{
@@ -230,7 +208,6 @@ namespace pWonders.App.DockLive
 				m_AutoShowing = true;
 				ShowBegan(this, EventArgs.Empty);
 				m_TimerMouseActivate.Stop();
-				m_AnimateSpeed = SPEED_ANIMATE;
 				m_AnimateStep = m_Form.Width;
 				m_Form.Visible = true;
 				m_TimerAnimate.Start();
@@ -248,7 +225,6 @@ namespace pWonders.App.DockLive
 				m_AutoHiding = true;
 				HideBegan(this, EventArgs.Empty);
 				m_TimerMouseActivate.Start();
-				m_AnimateSpeed = SPEED_ANIMATE;
 				m_AnimateStep = m_Form.Width;
 				m_TimerAnimate.Start();
 			}
