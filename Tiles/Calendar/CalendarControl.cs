@@ -36,24 +36,18 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			this.Theme = AppTheme.System;
 			m_View = CalendarView.Month;
 
-			btnNextMonth = new Label();
-			btnNextMonth.ForeColor = m_NavigationColor;
-			btnNextMonth.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnNextMonth.MouseDown += btn_MouseDown;
+			btnNextMonth = new_Label();
 			btnNextMonth.MouseUp += btnNextMonth_MouseUp;
 			btnNextMonth.Paint += btnNextMonth_Paint;
-			btnPrevMonth = new Label();
-			btnPrevMonth.ForeColor = m_NavigationColor;
-			btnPrevMonth.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnPrevMonth.MouseDown += btn_MouseDown;
+
+			btnPrevMonth = new_Label();
 			btnPrevMonth.MouseUp += btnPrevMonth_MouseUp;
 			btnPrevMonth.Paint += btnPrevMonth_Paint;
-			btnToday = new Label();
-			btnToday.ForeColor = m_NavigationColor;
-			btnToday.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnToday.MouseDown += btn_MouseDown;
+
+			btnToday = new_Label();
 			btnToday.MouseUp += btnToday_MouseUp;
 			btnToday.Paint += btnToday_Paint;
+
 			this.Controls.AddRange(new Control[] { btnToday, btnPrevMonth, btnNextMonth });
 
 			get_metrics();
@@ -157,8 +151,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						m_SaturdayColor = DARK_SATURDAY_COLOR;
 						m_WeekdayColor = DARK_WEEKDAY_COLOR;
 						m_WeekNumberColor = DARK_WEEKNUMBER_COLOR;
-						m_HiliBackColor = DARK_HILI_BACKCOLOR;
-						m_HiliForeColor = DARK_HILI_FORECOLOR;
+						m_TodayBackColor = DARK_TODAY_BACKCOLOR;
+						m_TodayForeColor = DARK_TODAY_FORECOLOR;
 						m_MonthBackColor = DARK_MONTH_BACKCOLOR;
 						m_MonthForeColor = DARK_MONTH_FORECOLOR;
 						break;
@@ -168,7 +162,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						if (UIColor.IsValid)
 						{
 							this.BackColor = UIColor.AccentDark2;
-							m_NavigationColor = UIColor.AccentDark1;
+							m_NavigationColor = UIColor.Background;
+							m_HiliColor = UIColor.Accent;
+							m_HiliAltColor = UIColor.AccentDark3;
 							m_YearColor = UIColor.Background;
 							m_MonthColor = UIColor.Background;
 							m_DayColor = UIColor.Background;
@@ -177,8 +173,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 							m_SaturdayColor = UIColor.AccentLight2;
 							m_WeekdayColor = UIColor.AccentLight3;
 							m_WeekNumberColor = UIColor.AccentDark3;
-							m_HiliBackColor = UIColor.Accent;
-							m_HiliForeColor = UIColor.Background;
+							m_TodayBackColor = UIColor.Accent;
+							m_TodayForeColor = UIColor.Background;
 							m_MonthBackColor = UIColor.AccentDark3;
 							m_MonthForeColor = UIColor.Foreground;
 						}
@@ -213,89 +209,104 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return m_NumWeekShown; }
 		}
 
+		public Color NavigationColor
+		{
+			set
+			{
+				if (m_NavigationColor != value)
+				{
+					m_NavigationColor = value;
+					btnToday.ForeColor = m_NavigationColor;
+					btnPrevMonth.ForeColor = m_NavigationColor;
+					btnNextMonth.ForeColor = m_NavigationColor;
+					request_redraw();
+				}
+			}
+			get { return m_NavigationColor; }
+		}
+
+		public Color HiliColor
+		{
+			set { if (m_HiliColor != value) { m_HiliColor = value; request_redraw(); } }
+			get { return m_HiliColor; }
+		}
+
+		public Color HiliAltColor
+		{
+			set { if (m_HiliAltColor != value) { m_HiliAltColor = value; request_redraw(); } }
+			get { return m_HiliAltColor; }
+		}
+
 		public Color YearColor
 		{
-			set { m_YearColor = value; request_redraw(); }
+			set { if (m_YearColor != value) { m_YearColor = value; request_redraw(); } }
 			get { return m_YearColor; }
 		}
 
 		public Color MonthColor
 		{
-			set { m_MonthColor = value; request_redraw(); }
+			set { if (m_MonthColor != value) { m_MonthColor = value; request_redraw(); } }
 			get { return m_MonthColor; }
 		}
 
 		public Color SundayColor
 		{
-			set { m_SundayColor = value; request_redraw(); }
+			set { if (m_SundayColor != value) { m_SundayColor = value; request_redraw(); } }
 			get { return m_SundayColor; }
 		}
 
 		public Color SaturdayColor
 		{
-			set { m_SaturdayColor = value; request_redraw(); }
+			set { if (m_SaturdayColor != value) { m_SaturdayColor = value; request_redraw(); } }
 			get { return m_SaturdayColor; }
 		}
 
 		public Color WeekdayColor
 		{
-			set { m_WeekdayColor = value; request_redraw(); }
+			set { if (m_WeekdayColor != value) { m_WeekdayColor = value; request_redraw(); } }
 			get { return m_WeekdayColor; }
 		}
 
 		public Color WeekNumberColor
 		{
-			set { m_WeekNumberColor = value; request_redraw(); }
+			set { if (m_WeekNumberColor != value) { m_WeekNumberColor = value; request_redraw(); } }
 			get { return m_WeekNumberColor; }
 		}
 
 		public Color DayColor
 		{
-			set { m_DayColor = value; request_redraw(); }
+			set { if (m_DayColor != value) { m_DayColor = value; request_redraw(); } }
 			get { return m_DayColor; }
 		}
 
 		public Color DayAltColor
 		{
-			set { m_DayAltColor = value; request_redraw(); }
+			set { if (m_DayAltColor != value) { m_DayAltColor = value; request_redraw(); } }
 			get { return m_DayAltColor; }
 		}
 
-		public Color HiliBackColor
+		public Color TodayBackColor
 		{
-			set { m_HiliBackColor = value; request_redraw(); }
-			get { return m_HiliBackColor; }
+			set { if (m_TodayBackColor != value) { m_TodayBackColor = value; request_redraw(); } }
+			get { return m_TodayBackColor; }
 		}
 
-		public Color HiliForeColor
+		public Color TodayForeColor
 		{
-			set { m_HiliForeColor = value; request_redraw(); }
-			get { return m_HiliForeColor; }
+			set { if (m_TodayForeColor != value) { m_TodayForeColor = value; request_redraw(); } }
+			get { return m_TodayForeColor; }
 		}
 
 		public Color MonthBackColor
 		{
-			set { m_MonthBackColor = value; request_redraw(); }
+			set { if (m_MonthBackColor != value) { m_MonthBackColor = value; request_redraw(); } }
 			get { return m_MonthBackColor; }
 		}
 
 		public Color MonthForeColor
 		{
-			set { m_MonthForeColor = value; request_redraw(); }
+			set { if (m_MonthForeColor != value) { m_MonthForeColor = value; request_redraw(); } }
 			get { return m_MonthForeColor; }
-		}
-
-		public Color NavigationColor
-		{
-			set
-			{
-				m_NavigationColor = value;
-				btnToday.ForeColor = m_NavigationColor;
-				btnPrevMonth.ForeColor = m_NavigationColor;
-				btnNextMonth.ForeColor = m_NavigationColor;
-				request_redraw();
-			}
-			get { return m_NavigationColor; }
 		}
 
 		const int DEFAULT_NUMWEEKSHOWN = 18;
@@ -309,8 +320,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		static readonly Color DARK_SATURDAY_COLOR = Color.Orange;
 		static readonly Color DARK_WEEKDAY_COLOR = Color.FromArgb(0xff, 0xff, 0xff);
 		static readonly Color DARK_WEEKNUMBER_COLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_HILI_BACKCOLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_HILI_FORECOLOR = Color.FromArgb(0x80, 0x80, 0x80);
+		static readonly Color DARK_TODAY_BACKCOLOR = Color.FromArgb(0x80, 0x80, 0x80);
+		static readonly Color DARK_TODAY_FORECOLOR = Color.FromArgb(0x80, 0x80, 0x80);
 		static readonly Color DARK_MONTH_BACKCOLOR = Color.FromArgb(0x10, 0x10, 0x10);
 		static readonly Color DARK_MONTH_FORECOLOR = Color.FromArgb(0x30, 0x30, 0x30);
 		static GregorianCalendar s_GregorianCalendar;
@@ -328,10 +339,10 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		AppTheme m_Theme;
 		CalendarView m_View;
 
-		Color m_NavigationColor;
+		Color m_NavigationColor, m_HiliColor, m_HiliAltColor;
 		Color m_YearColor, m_MonthColor, m_DayColor, m_DayAltColor;
 		Color m_SundayColor, m_SaturdayColor, m_WeekdayColor, m_WeekNumberColor;
-		Color m_HiliBackColor, m_HiliForeColor, m_MonthBackColor, m_MonthForeColor;
+		Color m_TodayBackColor, m_TodayForeColor, m_MonthBackColor, m_MonthForeColor;
 
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
@@ -395,6 +406,16 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					m_Renderer.Draw(e.Graphics);
 				}
 			}
+		}
+
+		private void btn_MouseEnter(object sender, EventArgs e)
+		{
+			(sender as Control).Invalidate();
+		}
+
+		private void btn_MouseLeave(object sender, EventArgs e)
+		{
+			(sender as Control).Invalidate();
 		}
 
 		private void btn_MouseDown(object sender, MouseEventArgs e)
@@ -498,6 +519,17 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			btnNextMonth.Location = new Point(this.ClientRectangle.Right - btnNextMonth.Width, this.ClientRectangle.Top);
 			btnPrevMonth.Location = new Point(btnNextMonth.Left - btnPrevMonth.Width, this.ClientRectangle.Top);
 			btnToday.Location = new Point(btnPrevMonth.Left - btnToday.Width, this.ClientRectangle.Top);
+		}
+
+		Label new_Label()
+		{
+			Label lbl = new Label();
+			lbl.ForeColor = m_NavigationColor;
+			lbl.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			lbl.MouseEnter += btn_MouseEnter;
+			lbl.MouseLeave += btn_MouseLeave;
+			lbl.MouseDown += btn_MouseDown;
+			return lbl;
 		}
 	}
 }

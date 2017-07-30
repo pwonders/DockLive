@@ -18,7 +18,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			m_YearDrawFmt.Alignment = StringAlignment.Near;
 			m_YearDrawFmt.LineAlignment = StringAlignment.Center;
 			m_MonthDrawFmt = new StringFormat(StringFormatFlags.FitBlackBox | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
-			m_MonthDrawFmt.Alignment = StringAlignment.Far;
+			m_MonthDrawFmt.Alignment = StringAlignment.Center;
 			m_MonthDrawFmt.LineAlignment = StringAlignment.Center;
 			m_DayOfWeekDrawFmt = new StringFormat(StringFormatFlags.FitBlackBox | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
 			m_DayOfWeekDrawFmt.Alignment = StringAlignment.Near;
@@ -89,6 +89,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			using (Font font = new Font(m_HostControl.Font.FontFamily, cy * /*72*/ 60 / g.DpiY, FontStyle.Regular))
 			{
 				g.DrawString(dateTime_last_dayofweek.Year.ToString(), font, br_year, rect, m_YearDrawFmt);
+				int cx_year = (int) g.MeasureString(dateTime_last_dayofweek.Year.ToString(), font, cx, m_YearDrawFmt).Width;
+				rect.X += cx_year;
+				rect.Width -= cx_year;
 				g.DrawString(dateTime_last_dayofweek.ToString("MMMM"), font, br_month, rect, m_MonthDrawFmt);
 			}
 		}
@@ -104,7 +107,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			using (Brush br_sun = new SolidBrush(m_HostControl.SundayColor))
 			using (Brush br_sat = new SolidBrush(m_HostControl.SaturdayColor))
 			using (Brush br_day = new SolidBrush(m_HostControl.WeekdayColor))
-			using (Brush br_hilibg = new SolidBrush(m_HostControl.HiliBackColor))
+			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
 			{
 				string[] day_names = DateTimeFormatInfo.InvariantInfo.AbbreviatedDayNames;
 				Brush[] br_dayofweek = new Brush[7] { br_sun, br_day, br_day, br_day, br_day, br_day, br_sat };
@@ -112,7 +115,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 				{
 					if (d == (int) m_DateTimeNow.DayOfWeek)
 					{
-						g.FillRectangle(br_hilibg, rect_dayofweek);
+						g.FillRectangle(br_todaybg, rect_dayofweek);
 					}
 					g.DrawString(day_names[d], m_HostControl.Font, br_dayofweek[d], rect_dayofweek, m_DayOfWeekDrawFmt);
 				}
@@ -131,8 +134,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			int weeknum_this = CalendarControl.GetWeekOfYear(m_DateTimeNow);
 
 			using (Brush brush = new SolidBrush(m_HostControl.WeekNumberColor))
-			using (Brush br_hilibg = new SolidBrush(m_HostControl.HiliBackColor))
-			using (Brush br_hilifg = new SolidBrush(m_HostControl.HiliForeColor))
+			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
+			using (Brush br_todayfg = new SolidBrush(m_HostControl.TodayForeColor))
 			{
 				Brush br;
 				for (int w = 0; w < m_HostControl.NumWeekShown; ++w, rect_weeknum.Y = rect_weeknum_content.Y += cy_weeknum, dateTime_last_dayofweek = dateTime_last_dayofweek.AddDays(7))
@@ -144,8 +147,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					}
 					else
 					{
-						br = br_hilifg;
-						g.FillRectangle(br_hilibg, rect_weeknum);
+						br = br_todayfg;
+						g.FillRectangle(br_todaybg, rect_weeknum);
 					}
 					g.DrawString(weeknum.ToString(), m_HostControl.Font, br, rect_weeknum_content, m_WeekNumDrawFmt);
 				}
@@ -225,8 +228,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			using (Brush br_day = new SolidBrush(m_HostControl.DayColor))
 			using (Brush br_dayalt = new SolidBrush(m_HostControl.DayAltColor))
 			using (Brush br_monthfg = new SolidBrush(m_HostControl.MonthForeColor))
-			using (Brush br_hilibg = new SolidBrush(m_HostControl.HiliBackColor))
-			using (Brush br_hilifg = new SolidBrush(m_HostControl.HiliForeColor))
+			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
+			using (Brush br_todayfg = new SolidBrush(m_HostControl.TodayForeColor))
 			{
 				for (int w = 0; w < m_HostControl.NumWeekShown; ++w, rect_day_box.Y += cy_day, rect_day_box.X = x_day)
 				{
@@ -235,8 +238,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						Brush brush_fg;
 						if (is_DateTime_Today(dt))
 						{
-							brush_fg = br_hilifg;
-							g.FillRectangle(br_hilibg, rect_day_box);
+							brush_fg = br_todayfg;
+							g.FillRectangle(br_todaybg, rect_day_box);
 						}
 						else
 						{
@@ -288,7 +291,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public virtual void PaintButtonToday(Control sender, Graphics g)
 		{
-			paint_button
+			paint_button_nonclient
 			(
 				sender as Control,
 				g,
@@ -318,7 +321,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public virtual void PaintButtonNextMonth(Control sender, Graphics g)
 		{
-			paint_button
+			paint_button_nonclient
 			(
 				sender as Control,
 				g,
@@ -329,14 +332,14 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						RectangleF rect_arrow = rect_border;
 						float arrow_border_margin = rect_border.Height / 4F;
 						rect_arrow.Inflate(-arrow_border_margin, -arrow_border_margin);
-						PointF pt_top = new PointF(rect_arrow.Left + rect_arrow.Width / 2, rect_arrow.Top);
+						PointF pt_top = new PointF(rect_arrow.Left + rect_arrow.Width / 2, rect_arrow.Top - 1);
 						PointF pt_bot = new PointF(pt_top.X, rect_arrow.Bottom);
 						PointF pt_left = new PointF(rect_arrow.Left, rect_arrow.Top + rect_arrow.Height / 2);
 						PointF pt_right = new PointF(rect_arrow.Right, pt_left.Y);
 						PointF[] points_left = new PointF[] { pt_top, pt_bot, pt_left };
 						PointF[] points_right = new PointF[] { pt_top, pt_bot, pt_right };
-						g.DrawLines(pen_client, points_left);
-						g.DrawLines(pen_client, points_right);
+						g.DrawCurve(pen_client, points_left);
+						g.DrawCurve(pen_client, points_right);
 					}
 				)
 			);
@@ -344,7 +347,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public virtual void PaintButtonPrevMonth(Control sender, Graphics g)
 		{
-			paint_button
+			paint_button_nonclient
 			(
 				sender as Control,
 				g,
@@ -356,13 +359,13 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						float arrow_border_margin = rect_border.Height / 4F;
 						rect_arrow.Inflate(-arrow_border_margin, -arrow_border_margin);
 						PointF pt_top = new PointF(rect_arrow.Left + rect_arrow.Width / 2, rect_arrow.Top);
-						PointF pt_bot = new PointF(pt_top.X, rect_arrow.Bottom);
+						PointF pt_bot = new PointF(pt_top.X, rect_arrow.Bottom + 1);
 						PointF pt_left = new PointF(rect_arrow.Left, rect_arrow.Top + rect_arrow.Height / 2);
 						PointF pt_right = new PointF(rect_arrow.Right, pt_left.Y);
 						PointF[] points_left = new PointF[] { pt_bot, pt_top, pt_left };
 						PointF[] points_right = new PointF[] { pt_bot, pt_top, pt_right };
-						g.DrawLines(pen_client, points_left);
-						g.DrawLines(pen_client, points_right);
+						g.DrawCurve(pen_client, points_left);
+						g.DrawCurve(pen_client, points_right);
 					}
 				)
 			);
@@ -468,36 +471,39 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			return time.Year == m_DateTimeNow.Year && time.Month == m_DateTimeNow.Month;
 		}
 
-		void paint_button(Control btn, Graphics g, Action<RectangleF, Pen> paint_client)
+		void paint_button_nonclient(Control btn, Graphics g, Action<RectangleF, Pen> paint_client)
 		{
 			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+			g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			RectangleF rect_border = btn.ClientRectangle;
 			rect_border.Inflate(-SystemInformation.Border3DSize.Width, -SystemInformation.Border3DSize.Width);
-			float border_pen_width = rect_border.Height / 16F;
-			float client_pen_width = rect_border.Height / 12F;
+			float border_pen_width = rect_border.Height / 20F;
+			float client_pen_width = rect_border.Height / 20F;
 			--rect_border.Width;
 			--rect_border.Height;
 
 			using (Pen pen_border = new Pen(btn.ForeColor, border_pen_width))
 			{
-				g.DrawEllipse(pen_border, rect_border);
-
-				Color pen_color;
-				if (btn.ClientRectangle.Contains(btn.PointToClient(Control.MousePosition)) && Control.MouseButtons == MouseButtons.Left)
+				if (btn.ClientRectangle.Contains(btn.PointToClient(Control.MousePosition)))
 				{
-					using (Brush brush = new SolidBrush(btn.ForeColor))
+					Color brush_color;
+					if (Control.MouseButtons == MouseButtons.None)
+					{
+						brush_color = m_HostControl.HiliColor;
+					}
+					else
+					{
+						brush_color = m_HostControl.HiliAltColor;
+					}
+					using (Brush brush = new SolidBrush(brush_color))
 					{
 						g.FillEllipse(brush, rect_border);
 					}
-					pen_color = btn.Parent.BackColor;
 				}
-				else
-				{
-					pen_color = btn.ForeColor;
-				}
-				using (Pen pen_client = new Pen(pen_color, client_pen_width))
+				g.DrawEllipse(pen_border, rect_border);
+				using (Pen pen_client = new Pen(btn.ForeColor, client_pen_width))
 				{
 					paint_client(rect_border, pen_client);
 				}
