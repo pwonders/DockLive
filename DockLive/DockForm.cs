@@ -268,12 +268,12 @@ namespace pWonders.App.DockLive
 
 		private void Animator_HideEnded(object sender, EventArgs e)
 		{
-			notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.trayicon_hidden;
+			notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.icon_hide_16;
 		}
 
 		private void Animator_ShowEnded(object sender, EventArgs e)
 		{
-			notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.trayicon_shown;
+			notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.icon_show_16;
 			// https://blogs.msdn.microsoft.com/oldnewthing/20080801-00/?p=21393/
 			this.Activate();
 		}

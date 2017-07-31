@@ -84,6 +84,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.manifest" />
+    <None Include="Properties\icon-hide-16.ico" />
+    <None Include="Properties\icon-show-16.ico" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,12 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\icon16-1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\icon16-2.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\pWonders.Lib\pWonders\pWonders.csproj">
@@ -133,6 +129,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

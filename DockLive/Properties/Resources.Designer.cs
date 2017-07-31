@@ -63,9 +63,9 @@ namespace pWonders.App.DockLive.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon trayicon_hidden {
+        internal static System.Drawing.Icon icon_hide_16 {
             get {
-                object obj = ResourceManager.GetObject("trayicon_hidden", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_hide_16", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace pWonders.App.DockLive.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon trayicon_shown {
+        internal static System.Drawing.Icon icon_show_16 {
             get {
-                object obj = ResourceManager.GetObject("trayicon_shown", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_show_16", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

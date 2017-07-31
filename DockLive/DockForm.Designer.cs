@@ -67,7 +67,7 @@
 			// notifyIcon
 			// 
 			this.notifyIcon.ContextMenu = this.contextMenu;
-			this.notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.trayicon_hidden;
+			this.notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.icon_hide_16;
 			this.notifyIcon.Visible = true;
 			this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
 			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
