@@ -17,7 +17,7 @@ namespace pWonders.App.DockLive
 			Desktop.SetCurrentScreen();
 			int cx = Desktop.ActionCenter.Width;
 			m_FullWidth = cx > 0 ? cx : Desktop.Screen.WorkingArea.Width / 5;
-
+			
 			InitializeComponent();
 			
 			this.Font = SystemFonts.StatusFont;
