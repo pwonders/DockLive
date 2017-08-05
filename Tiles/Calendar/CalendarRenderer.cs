@@ -165,7 +165,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			float cy_day_content = get_day_content_height(g);
 			RectangleF rect_day_box = new RectangleF(x_day, y_day, cx_day, cy_day);
 
-			// Do I need this?
+			// Clip partial big month number away.
 			g.SetClip(new Rectangle(x_day, y_day, m_HostControl.CalendarContentRectangle.Width - x_day, m_HostControl.CalendarContentRectangle.Height - y_day));
 
 			DateTime dt = dateTime_last_dayofweek.AddDays(-6);
@@ -226,6 +226,18 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					if ((w == m_HostControl.NumWeekShown - 1 || rect_area_ended) && rect_area.IsEmpty == false)
 					{
 						g.FillRectangle(br_bigmonbg, Rectangle.Round(rect_area));
+						DateTime dt_topleft = m_HostControl.GetFirstFirstDayOfWeek(dt_area);
+						DateTime dt_bottomright = m_HostControl.GetLastLastDayOfWeek(dt_area);
+						if (m_HostControl.IsDateTimeVisible(dt_topleft) == false)
+						{
+							float bottom = rect_area.Bottom;
+							rect_area.Height = cy_day * get_num_of_full_weeks(dt_topleft, dt_bottomright);
+							rect_area.Y = bottom - rect_area.Height;
+						}
+						else if (m_HostControl.IsDateTimeVisible(dt_bottomright) == false)
+						{
+							rect_area.Height = cy_day * get_num_of_full_weeks(dt_topleft, dt_bottomright);
+						}
 						string month_text = dt_area.Month > 1 ? dt_area.Month.ToString() : dt_area.Year.ToString();
 						g.DrawString(month_text, font, br_bigmonfg, rect_area, m_BigMonthDrawFmt);
 						rect_area = RectangleF.Empty;
@@ -251,6 +263,18 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					}
 					if ((w == m_HostControl.NumWeekShown - 1 || rect_area_ended2) && rect_area2.IsEmpty == false)
 					{
+						DateTime dt_topleft = m_HostControl.GetFirstFirstDayOfWeek(dt_area2);
+						DateTime dt_bottomright = m_HostControl.GetLastLastDayOfWeek(dt_area2);
+						if (m_HostControl.IsDateTimeVisible(dt_topleft) == false)
+						{
+							float bottom = rect_area2.Bottom;
+							rect_area2.Height = cy_day * get_num_of_full_weeks(dt_topleft, dt_bottomright);
+							rect_area2.Y = bottom - rect_area2.Height;
+						}
+						else if (m_HostControl.IsDateTimeVisible(dt_bottomright) == false)
+						{
+							rect_area2.Height = cy_day * get_num_of_full_weeks(dt_topleft, dt_bottomright);
+						}
 						string month_text = dt_area2.Month > 1 ? dt_area2.Month.ToString() : dt_area2.Year.ToString();
 						g.DrawString(month_text, font, br_bigmonfg2, rect_area2, m_BigMonthDrawFmt);
 						rect_area2 = RectangleF.Empty;
@@ -561,6 +585,11 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					paint_client(rect_border, pen_client);
 				}
 			}
+		}
+
+		int get_num_of_full_weeks(DateTime dt_topleft, DateTime dt_bottomright)
+		{
+			return (int) (dt_bottomright.AddDays(1) - dt_topleft).TotalDays / 7;
 		}
 	}
 }

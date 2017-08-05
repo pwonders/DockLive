@@ -58,16 +58,6 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			SetCurrentMonth(DateTime.Now);
 		}
 
-		void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-		{
-			if (e.Category == UserPreferenceCategory.Window)
-			{
-				get_metrics();
-				set_navi_bounds();
-				request_redraw();
-			}
-		}
-
 		public void BeginUpdate()
 		{
 			++m_BeginUpdate;
@@ -87,6 +77,26 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			return m_FirstLastDayOfWeek;
 		}
 
+		public DateTime GetFirstFirstDayOfWeek(DateTime month)
+		{
+			DateTime dt = new DateTime(month.Year, month.Month, 1);
+			if (dt.DayOfWeek != DayOfWeek.Sunday)
+			{
+				dt = dt.AddDays(7 - (int) dt.DayOfWeek);
+			}
+			return dt;
+		}
+
+		public DateTime GetLastLastDayOfWeek(DateTime month)
+		{
+			DateTime dt = new DateTime(month.Year, month.Month, DateTime.DaysInMonth(month.Year, month.Month));
+			if (dt.DayOfWeek != DayOfWeek.Saturday)
+			{
+				dt = dt.AddDays(-(int) dt.DayOfWeek - 1);
+			}
+			return dt;
+		}
+
 		public void SetCurrentDateTime(DateTime time)
 		{
 			m_FirstLastDayOfWeek = time.AddDays(7 - (int) (time.DayOfWeek + 1));
@@ -97,6 +107,23 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			DateTime dt_first_of_month = time.AddDays(-time.Day + 1);
 			SetCurrentDateTime(dt_first_of_month);
+		}
+
+		public bool IsDateTimeVisible(DateTime time)
+		{
+			DateTime dt = m_FirstLastDayOfWeek.AddDays(-6);
+			dt = new DateTime(dt.Year, dt.Month, dt.Day);
+			if (time < dt)
+			{
+				return false;
+			}
+			dt = m_FirstLastDayOfWeek.AddDays((m_NumWeekShown - 1) * 7);
+			dt = new DateTime(dt.Year, dt.Month, dt.Day);
+			if (dt < time)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		[Browsable(false)]
@@ -386,6 +413,16 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			}
 		}
 
+		void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+		{
+			if (e.Category == UserPreferenceCategory.Window)
+			{
+				get_metrics();
+				set_navi_bounds();
+				request_redraw();
+			}
+		}
+
 		private void btn_MouseEnter(object sender, EventArgs e)
 		{
 			(sender as Control).Invalidate();
@@ -447,7 +484,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						}
 						else
 						{
-							SetCurrentMonth(m_FirstLastDayOfWeek.AddDays(7));
+							SetCurrentDateTime(m_FirstLastDayOfWeek.AddDays(7));
 						}
 					}
 				)
@@ -475,7 +512,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						}
 						else
 						{
-							SetCurrentMonth(m_FirstLastDayOfWeek.AddDays(-7));
+							SetCurrentDateTime(m_FirstLastDayOfWeek.AddDays(-7));
 						}
 					}
 				)
