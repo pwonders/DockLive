@@ -24,7 +24,7 @@ namespace pWonders.App.DockLive
 			InitializeComponent();
 
 			this.notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.icon_show_16;
-			this.pnlScroller.Width = m_FullWidth + SystemInformation.VerticalScrollBarWidth;
+			this.pnlScroller.Width = m_FullWidth;
 			//this.DoubleBuffered = true;
 			this.Font = SystemFonts.StatusFont;
 			this.Opacity = 254 / 255.0;
@@ -111,6 +111,7 @@ namespace pWonders.App.DockLive
 			tblTiles.SuspendLayout();
 			foreach (ITile tile in m_Loader.Load())
 			{
+				tile.Control.Dock = DockStyle.Fill;
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
 			}
@@ -166,6 +167,18 @@ namespace pWonders.App.DockLive
 				pnlScroller.Width = m_FullWidth + SystemInformation.VerticalScrollBarWidth;
 			}
 			// TODO: WM_DWMCOLORIZATIONCOLORCHANGED
+		}
+
+		private void pnlScroller_ClientSizeChanged(object sender, EventArgs e)
+		{
+			if (pnlScroller.VerticalScroll.Visible)
+			{
+				pnlScroller.Width = m_FullWidth + SystemInformation.VerticalScrollBarWidth;
+			}
+			else
+			{
+				pnlScroller.Width = m_FullWidth;
+			}
 		}
 
 		private void mnuExit_Click(object sender, EventArgs e)

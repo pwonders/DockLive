@@ -81,20 +81,19 @@
 			this.pnlScroller.Name = "pnlScroller";
 			this.pnlScroller.Size = new System.Drawing.Size(180, 800);
 			this.pnlScroller.TabIndex = 1;
+			this.pnlScroller.ClientSizeChanged += new System.EventHandler(this.pnlScroller_ClientSizeChanged);
 			// 
 			// tblTiles
 			// 
 			this.tblTiles.AutoSize = true;
 			this.tblTiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tblTiles.ColumnCount = 1;
-			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tblTiles.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tblTiles.Location = new System.Drawing.Point(0, 0);
 			this.tblTiles.Name = "tblTiles";
 			this.tblTiles.RowCount = 1;
-			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblTiles.Size = new System.Drawing.Size(180, 0);
 			this.tblTiles.TabIndex = 1;
 			// 
