@@ -16,10 +16,10 @@ namespace pWonders.App.DockLive
 		{
 			m_Form = form;
 			m_TimerMouseActivate = new Timer();
-			m_TimerMouseActivate.Enabled = true;
 			m_TimerMouseActivate.Tick += TimerMouseActivate_Tick;
+			///m_TimerMouseActivate.Enabled = true;
 			m_TimerAnimate = new Timer();
-			m_TimerAnimate.Interval = 1;
+			m_TimerAnimate.Interval = 10;
 			m_TimerAnimate.Tick += TimerAnimate_Tick;
 		}
 
@@ -40,23 +40,46 @@ namespace pWonders.App.DockLive
 
 		public void BeginAutoShow()
 		{
-			begin_autoshow();
+			// TODO: check cpu load.
+			if (m_AutoHiding)
+			{
+				OnHideEnded(EventArgs.Empty);
+			}
+			if (m_AutoShowing == false)
+			{
+				m_AutoShowing = true;
+				ShowBegan(this, EventArgs.Empty);
+				///m_TimerMouseActivate.Stop();
+				m_WidthShown = Desktop.Screen.WorkingArea.Right - m_Form.Left;
+				m_TimerAnimate.Start();
+			}
 		}
 
 		public void BeginAutoHide()
 		{
-			begin_autohide();
+			if (m_AutoShowing)
+			{
+				OnShowEnded(EventArgs.Empty);
+			}
+			if (m_AutoHiding == false)
+			{
+				m_AutoHiding = true;
+				HideBegan(this, EventArgs.Empty);
+				///m_TimerMouseActivate.Start();
+				m_WidthShown = Desktop.Screen.WorkingArea.Right - m_Form.Left;
+				m_TimerAnimate.Start();
+			}
 		}
 
 		const int EDGE_TOLERANCE = 4;
+		const int MIN_SPEED = 1;
 
 		DockForm m_Form;
 		Timer m_TimerMouseActivate, m_TimerAnimate;
 		bool m_AutoShowTriggered, m_AutoHideTriggered;
 		DateTime m_AutoShowTriggeredTime, m_AutoHideTriggeredTime;
 		bool m_AutoShowing, m_AutoHiding;
-		DateTime m_LastAnimateTime;
-		int m_AnimateStep;
+		int m_WidthShown;
 
 		protected void OnShowEnded(EventArgs e)
 		{
@@ -99,43 +122,37 @@ namespace pWonders.App.DockLive
 
 		private void TimerAnimate_Tick(object sender, EventArgs e)
 		{
-			// TODO: relate this magic number 8 with system performance.
-			if ((DateTime.Now - m_LastAnimateTime).TotalMilliseconds > 8)
+			m_TimerAnimate.Enabled = false;
+
+			Rectangle rect = Desktop.Screen.WorkingArea;
+			int speed;
+			if (m_AutoShowing)
 			{
-				m_LastAnimateTime = DateTime.Now;
-				Rectangle rect = Desktop.Screen.WorkingArea;
-				int speed;
-				if (m_AutoShowing)
+				speed = (m_Form.FullWidth - m_WidthShown) / 5;
+				if (speed < MIN_SPEED) speed = MIN_SPEED;
+				if (speed > m_Form.FullWidth - m_WidthShown) speed = m_Form.FullWidth - m_WidthShown;
+				m_WidthShown += speed;
+				m_Form.SetDesktopBounds(rect.Right - m_WidthShown, 0, m_Form.FullWidth, rect.Height);
+				if (m_Form.Left + m_Form.FullWidth <= rect.Right)
 				{
-					speed = (m_Form.FullWidth - m_Form.Width) / 4;
-					if (speed < 1)
-					{
-						speed = 1;
-					}
-					m_AnimateStep += speed;
-					m_Form.SetBounds(rect.Right - m_AnimateStep, rect.Top, m_AnimateStep, rect.Height);
-					if (m_AnimateStep >= m_Form.FullWidth)
-					{
-						OnShowEnded(EventArgs.Empty);
-					}
-				}
-				else if (m_AutoHiding)
-				{
-					speed = m_Form.Width / 4;
-					if (speed < 1)
-					{
-						speed = 1;
-					}
-					m_AnimateStep -= speed;
-					m_Form.SetBounds(rect.Right - m_AnimateStep, rect.Top, m_AnimateStep, rect.Height);
-					if (m_AnimateStep <= 0)
-					{
-						m_Form.Width = 0;
-						m_Form.Hide();
-						OnHideEnded(EventArgs.Empty);
-					}
+					OnShowEnded(EventArgs.Empty);
+					return;
 				}
 			}
+			else if (m_AutoHiding)
+			{
+				speed = m_WidthShown / 5;
+				if (speed < MIN_SPEED) speed = MIN_SPEED;
+				if (speed > m_WidthShown) speed = m_WidthShown;
+				m_WidthShown -= speed;
+				m_Form.SetDesktopBounds(rect.Right - m_WidthShown, 0, m_Form.FullWidth, rect.Height);
+				if (m_Form.Left >= rect.Right)
+				{
+					OnHideEnded(EventArgs.Empty);
+					return;
+				}
+			}
+			m_TimerAnimate.Enabled = true;
 		}
 
 		void check_show_trigger()
@@ -163,8 +180,7 @@ namespace pWonders.App.DockLive
 			TimeSpan time_from_trigger = DateTime.Now - m_AutoShowTriggeredTime;
 			if (SystemInformation.DoubleClickTime < time_from_trigger.TotalMilliseconds)
 			{
-				m_LastAnimateTime = DateTime.Now;
-				begin_autoshow();
+				BeginAutoShow();
 			}
 		}
 
@@ -191,42 +207,7 @@ namespace pWonders.App.DockLive
 			TimeSpan time_triggered = DateTime.Now - m_AutoHideTriggeredTime;
 			if (true || SystemInformation.DoubleClickTime < time_triggered.TotalMilliseconds)
 			{
-				m_LastAnimateTime = DateTime.Now;
-				begin_autohide();
-			}
-		}
-
-		void begin_autoshow()
-		{
-			// TODO: check cpu load.
-			if (m_AutoHiding)
-			{
-				OnHideEnded(EventArgs.Empty);
-			}
-			if (m_AutoShowing == false)
-			{
-				m_AutoShowing = true;
-				ShowBegan(this, EventArgs.Empty);
-				m_TimerMouseActivate.Stop();
-				m_AnimateStep = m_Form.Width;
-				m_Form.Visible = true;
-				m_TimerAnimate.Start();
-			}
-		}
-
-		void begin_autohide()
-		{
-			if (m_AutoShowing)
-			{
-				OnShowEnded(EventArgs.Empty);
-			}
-			if (m_AutoHiding == false)
-			{
-				m_AutoHiding = true;
-				HideBegan(this, EventArgs.Empty);
-				m_TimerMouseActivate.Start();
-				m_AnimateStep = m_Form.Width;
-				m_TimerAnimate.Start();
+				BeginAutoHide();
 			}
 		}
 	}
