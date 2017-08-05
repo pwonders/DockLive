@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive.Tiles.Calendar
@@ -34,7 +35,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			m_Host = host;
 			m_Control.Theme = m_Host.Theme;
-			m_Control.SetBounds(0, 0, host.FullBounds.Width, host.FullBounds.Width, BoundsSpecified.Size);
+			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width - m_Control.Margin.Vertical);
 		}
 
 		public void OnDetachTile()

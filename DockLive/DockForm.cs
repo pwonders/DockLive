@@ -112,6 +112,7 @@ namespace pWonders.App.DockLive
 			foreach (ITile tile in m_Loader.Load())
 			{
 				tile.Control.Dock = DockStyle.Fill;
+				tile.Control.Margin = new Padding(4);
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
 			}
