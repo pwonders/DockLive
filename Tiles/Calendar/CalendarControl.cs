@@ -34,6 +34,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			m_NumWeekShown = DEFAULT_NUMWEEKSHOWN;
 
 			this.DoubleBuffered = true;
+			m_NumWeekShown = 5;
 			m_View = CalendarView.Month;
 
 			btnNextMonth = new_Label();
@@ -53,7 +54,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get_metrics();
 			set_navi_bounds();
 			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
-			
+
 			SetCurrentMonth(DateTime.Now);
 		}
 
@@ -319,7 +320,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		static readonly Color DARK_MONTH_BACKCOLOR = Color.FromArgb(0x10, 0x10, 0x10);
 		static readonly Color DARK_MONTH_FORECOLOR = Color.FromArgb(0x30, 0x30, 0x30);
 		static GregorianCalendar s_GregorianCalendar;
-		
+
 		int m_TopbarSize;
 		int m_ButtonSize;
 		Label btnToday, btnNextMonth, btnPrevMonth;
@@ -342,13 +343,13 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			base.OnMouseWheel(e);
 			if (m_View == CalendarView.Month)
 			{
-				if (Control.ModifierKeys == Keys.Control)
+				if (Control.ModifierKeys.HasFlag(Keys.Control) == false)
 				{
-					this.NumWeekShown += -Math.Sign(e.Delta);
+					this.SetCurrentDateTime(m_FirstLastDayOfWeek.AddDays(-Math.Sign(e.Delta) * 7));
 				}
 				else
 				{
-					this.SetCurrentDateTime(m_FirstLastDayOfWeek.AddDays(-Math.Sign(e.Delta) * 7 * this.NumWeekShown / DEFAULT_NUMWEEKSHOWN));
+					this.NumWeekShown += -Math.Sign(e.Delta);
 				}
 			}
 		}
@@ -368,7 +369,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			DateTime dt;
 			if (m_Renderer.HitTestDate(this.PointToClient(Control.MousePosition), out dt))
 			{
-				m_View = CalendarView.Day;
+				//m_View = CalendarView.Day;
 				System.Diagnostics.Debug.WriteLine(dt);
 			}
 		}
@@ -440,7 +441,14 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 				(
 					delegate
 					{
-						SetCurrentMonth(m_FirstLastDayOfWeek.AddMonths(1));
+						if (Control.ModifierKeys.HasFlag(Keys.Shift) == false)
+						{
+							SetCurrentMonth(m_FirstLastDayOfWeek.AddMonths(1));
+						}
+						else
+						{
+							SetCurrentMonth(m_FirstLastDayOfWeek.AddDays(7));
+						}
 					}
 				)
 			);
@@ -461,7 +469,14 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 				(
 					delegate
 					{
-						SetCurrentMonth(m_FirstLastDayOfWeek.AddMonths(-1));
+						if (Control.ModifierKeys.HasFlag(Keys.Shift) == false)
+						{
+							SetCurrentMonth(m_FirstLastDayOfWeek.AddMonths(-1));
+						}
+						else
+						{
+							SetCurrentMonth(m_FirstLastDayOfWeek.AddDays(-7));
+						}
 					}
 				)
 			);
@@ -471,7 +486,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			m_Renderer.PaintButtonPrevMonth(sender as Control, e.Graphics);
 		}
-		
+
 		void request_redraw()
 		{
 			if (m_BeginUpdate == 0)
