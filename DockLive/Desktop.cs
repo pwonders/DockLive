@@ -58,22 +58,55 @@ namespace pWonders.App.DockLive
 
 		public static class ActionCenter
 		{
-			public static int Width
+			public static string Title
 			{
 				get
 				{
-					// FIXME: handle localization.
-					IntPtr h = g.FindWindow(CLASS, TITLE_EN);
-					g.RECT r;
-					if (g.GetWindowRect(h, out r))
+					RegistryKey root = Registry.ClassesRoot;
+					RegistryKey key = null;
+					try
 					{
-						return r.Right - r.Left;
+						key = root.OpenSubKey(REGKEY);
+						return key.GetValue(null).ToString();
 					}
-					return 0;
+					catch { }
+					finally
+					{
+						if (key != null)
+						{
+							key.Close();
+						}
+					}
+					return TITLE_EN;
 				}
 			}
-			const string CLASS = "Windows.UI.Core.CoreWindow";
+			public static IntPtr Handle
+			{
+				get { return API.FindWindow(CLASS, Title); }
+			}
+			public static bool Visible
+			{
+				get { return API.IsWindowVisible(Handle); }
+			}
+			public static Rectangle Bounds
+			{
+				set
+				{
+					API.SetWindowPos(Handle, IntPtr.Zero, value.Left, value.Top, value.Width, value.Height, API.SWP_NOZORDER);
+				}
+				get
+				{
+					API.RECT r;
+					if (API.GetWindowRect(Handle, out r))
+					{
+						return new Rectangle(r.left, r.top, r.right - r.left, r.bottom - r.top);
+					}
+					return Rectangle.Empty;
+				}
+			}
+			const string REGKEY = "AppXak1hygz1tpjjnxhr1pwtcgnkpr24r5e7";
 			const string TITLE_EN = "Action center";
+			const string CLASS = "Windows.UI.Core.CoreWindow";
 		}
 
 		static Screen s_Screen;
