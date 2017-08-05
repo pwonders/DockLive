@@ -35,7 +35,7 @@
 			this.mnuExit = new System.Windows.Forms.MenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.pnlScroller = new System.Windows.Forms.Panel();
-			this.tbl = new System.Windows.Forms.TableLayoutPanel();
+			this.tblTiles = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlScroller.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -67,7 +67,6 @@
 			// notifyIcon
 			// 
 			this.notifyIcon.ContextMenu = this.contextMenu;
-			this.notifyIcon.Icon = global::pWonders.App.DockLive.Properties.Resources.icon_hide_16;
 			this.notifyIcon.Visible = true;
 			this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
 			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
@@ -75,27 +74,29 @@
 			// pnlScroller
 			// 
 			this.pnlScroller.AutoScroll = true;
-			this.pnlScroller.Controls.Add(this.tbl);
+			this.pnlScroller.BackColor = System.Drawing.Color.Transparent;
+			this.pnlScroller.Controls.Add(this.tblTiles);
 			this.pnlScroller.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pnlScroller.Location = new System.Drawing.Point(0, 0);
 			this.pnlScroller.Name = "pnlScroller";
 			this.pnlScroller.Size = new System.Drawing.Size(180, 800);
 			this.pnlScroller.TabIndex = 1;
 			// 
-			// tbl
+			// tblTiles
 			// 
-			this.tbl.AutoSize = true;
-			this.tbl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tbl.ColumnCount = 1;
-			this.tbl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tbl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tbl.Location = new System.Drawing.Point(0, 0);
-			this.tbl.Name = "tbl";
-			this.tbl.RowCount = 1;
-			this.tbl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tbl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tbl.Size = new System.Drawing.Size(0, 0);
-			this.tbl.TabIndex = 1;
+			this.tblTiles.AutoSize = true;
+			this.tblTiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tblTiles.ColumnCount = 1;
+			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tblTiles.Location = new System.Drawing.Point(0, 0);
+			this.tblTiles.Name = "tblTiles";
+			this.tblTiles.RowCount = 1;
+			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tblTiles.Size = new System.Drawing.Size(180, 0);
+			this.tblTiles.TabIndex = 1;
 			// 
 			// DockForm
 			// 
@@ -123,7 +124,7 @@
 		private System.Windows.Forms.MenuItem mnuSettings;
 		private System.Windows.Forms.MenuItem mnuSep;
 		private System.Windows.Forms.Panel pnlScroller;
-		private System.Windows.Forms.TableLayoutPanel tbl;
+		private System.Windows.Forms.TableLayoutPanel tblTiles;
 	}
 }
 
