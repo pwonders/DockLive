@@ -202,7 +202,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					if (rect_week.IsEmpty == false)
 					{
 						// Is there no month transition?
-						if (rect_week.Left == x_day && rect_week.Right == m_HostControl.CalendarContentRectangle.Right)
+						if ((int) Math.Round(rect_week.Left) == x_day && (int) Math.Round(rect_week.Right) == m_HostControl.CalendarContentRectangle.Right)
 						{
 							// There isn't, so add the rect to be filled at once.
 							rect_area = rect_area.IsEmpty ? rect_week : RectangleF.Union(rect_area, rect_week);
@@ -232,7 +232,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					}
 					if (rect_week2.IsEmpty == false)
 					{
-						if (rect_week2.Left == x_day && rect_week2.Right == m_HostControl.CalendarContentRectangle.Right)
+						if ((int) Math.Round(rect_week2.Left) == x_day && (int) Math.Round(rect_week2.Right) == m_HostControl.CalendarContentRectangle.Right)
 						{
 							rect_area2 = rect_area2.IsEmpty ? rect_week2 : RectangleF.Union(rect_area2, rect_week2);
 							rect_area_ended2 = false;
@@ -502,7 +502,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 		}
-		
+
 		void draw_calendar(Graphics g, DateTime dateTime_last_dayofweek)
 		{
 			m_DateTimeNow = DateTime.Now;
