@@ -41,8 +41,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 		}
 
-		public void AppThemeChanged()
+		public void OnThemeChanged(AppTheme theme)
 		{
+			m_Control.Theme = theme;
 		}
 
 		CalendarControl m_Control;

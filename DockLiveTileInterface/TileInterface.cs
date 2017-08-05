@@ -19,6 +19,6 @@ namespace pWonders.App.DockLive.TileInterface
 		Control Control { get; }
 		void OnAttachTile(ITileHost host);
 		void OnDetachTile();
-		void AppThemeChanged();
+		void OnThemeChanged(AppTheme theme);
 	}
 }

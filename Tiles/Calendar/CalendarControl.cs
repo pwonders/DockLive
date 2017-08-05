@@ -32,8 +32,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			m_Renderer = new CalendarRenderer(this);
 			m_NumWeekShown = DEFAULT_NUMWEEKSHOWN;
+
 			this.DoubleBuffered = true;
-			this.Theme = AppTheme.System;
 			m_View = CalendarView.Month;
 
 			btnNextMonth = new_Label();
@@ -72,9 +72,13 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			++m_BeginUpdate;
 		}
 
-		public void EndUpdate()
+		public void EndUpdate(bool invalidate)
 		{
 			--m_BeginUpdate;
+			if (invalidate)
+			{
+				request_redraw();
+			}
 		}
 
 		public DateTime GetFirstLastDayOfWeek()
@@ -133,7 +137,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 					case AppTheme.System:
 						int a_header = 0xff, a_fg = 0xff, a_today = 0xff, a_month = 0xbf;
 						this.BackColor = Color.FromArgb(0, UIColor.AccentDark2);
-						m_NavForeColor = Color.FromArgb(a_header, UIColor.Background);
+						this.NavForeColor = Color.FromArgb(a_header, UIColor.Background);
 						m_NavHiliBackColor = Color.FromArgb(a_header, UIColor.Accent);
 						m_NavHiliBackColor2 = Color.FromArgb(a_header, UIColor.AccentDark2);
 						m_YearForeColor = Color.FromArgb(a_header, UIColor.Background);
@@ -374,7 +378,10 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			base.OnPaint(e);
 			if (m_BeginUpdate == 0)
 			{
-				m_Renderer.Draw(e.Graphics);
+				if (e.ClipRectangle.Width == this.ClientRectangle.Width)
+				{
+					m_Renderer.Draw(e.Graphics);
+				}
 			}
 		}
 
@@ -464,7 +471,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			m_Renderer.PaintButtonPrevMonth(sender as Control, e.Graphics);
 		}
-
+		
 		void request_redraw()
 		{
 			if (m_BeginUpdate == 0)

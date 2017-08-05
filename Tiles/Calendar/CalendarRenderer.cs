@@ -502,7 +502,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 		}
-
+		
 		void draw_calendar(Graphics g, DateTime dateTime_last_dayofweek)
 		{
 			m_DateTimeNow = DateTime.Now;

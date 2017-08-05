@@ -109,10 +109,8 @@ namespace pWonders.App.DockLive
 
 			this.SuspendLayout();
 			tblTiles.SuspendLayout();
-			tblTiles.Dock = DockStyle.Fill;
 			foreach (ITile tile in m_Loader.Load())
 			{
-				tile.Control.Margin = Padding.Empty;
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
 			}
