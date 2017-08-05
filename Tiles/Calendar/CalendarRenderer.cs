@@ -20,7 +20,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			m_YearDrawFmt.Alignment = StringAlignment.Near;
 			m_YearDrawFmt.LineAlignment = StringAlignment.Center;
 			m_MonthDrawFmt = new StringFormat(StringFormatFlags.FitBlackBox | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
-			m_MonthDrawFmt.Alignment = StringAlignment.Center;
+			m_MonthDrawFmt.Alignment = StringAlignment.Near;
 			m_MonthDrawFmt.LineAlignment = StringAlignment.Center;
 			m_DayOfWeekDrawFmt = new StringFormat(StringFormatFlags.FitBlackBox | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
 			m_DayOfWeekDrawFmt.Alignment = StringAlignment.Near;
