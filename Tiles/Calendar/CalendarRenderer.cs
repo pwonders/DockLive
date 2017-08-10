@@ -84,8 +84,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			int cy = m_HostControl.CalendarTopRectangle.Height;
 			Rectangle rect = new Rectangle(x, y, cx, cy);
 
-			using (Brush br_year = new SolidBrush(m_HostControl.YearForeColor))
-			using (Brush br_month = new SolidBrush(m_HostControl.MonthForeColor))
+			Brush br_year = m_HostControl.GetBrush(AppThemeColor.YearForeColor);
+			Brush br_month = m_HostControl.GetBrush(AppThemeColor.MonthForeColor);
 			using (Font font = new Font(m_HostControl.Font.FontFamily, get_point_from_pixel(cy, g) * 5 / 6, FontStyle.Regular))
 			{
 				g.DrawString(dateTime_last_dayofweek.Year.ToString(), font, br_year, rect, m_YearDrawFmt);
@@ -104,10 +104,10 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			int cy_dayofweek = (int) get_daysofweek_height(g);
 			RectangleF rect_dayofweek = new RectangleF(x_dayofweek, y_dayofweek, cx_dayofweek, cy_dayofweek);
 
-			using (Brush br_sun = new SolidBrush(m_HostControl.SunForeColor))
-			using (Brush br_sat = new SolidBrush(m_HostControl.SatForeColor))
-			using (Brush br_day = new SolidBrush(m_HostControl.WeekdayForeColor))
-			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
+			Brush br_sun = m_HostControl.GetBrush(AppThemeColor.SunForeColor);
+			Brush br_sat = m_HostControl.GetBrush(AppThemeColor.SatForeColor);
+			Brush br_day = m_HostControl.GetBrush(AppThemeColor.WeekdayForeColor);
+			Brush br_todaybg = m_HostControl.GetBrush(AppThemeColor.TodayBackColor);
 			{
 				string[] day_names = DateTimeFormatInfo.InvariantInfo.AbbreviatedDayNames;
 				Brush[] br_dayofweek = new Brush[7] { br_sun, br_day, br_day, br_day, br_day, br_day, br_sat };
@@ -133,9 +133,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			RectangleF rect_weeknum_content = new RectangleF(x_weeknum, y_weeknum, cx_weeknum, cy_weeknum_content);
 			int weeknum_this = CalendarControl.GetWeekOfYear(m_DateTimeNow);
 
-			using (Brush brush = new SolidBrush(m_HostControl.WeekNumForeColor))
-			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
-			using (Brush br_todayfg = new SolidBrush(m_HostControl.TodayForeColor))
+			Brush brush = m_HostControl.GetBrush(AppThemeColor.WeekNumForeColor);
+			Brush br_todaybg = m_HostControl.GetBrush(AppThemeColor.TodayBackColor);
+			Brush br_todayfg = m_HostControl.GetBrush(AppThemeColor.TodayForeColor);
 			{
 				Brush br;
 				for (int w = 0; w < m_HostControl.NumWeekShown; ++w, rect_weeknum.Y = rect_weeknum_content.Y += cy_weeknum, dateTime_last_dayofweek = dateTime_last_dayofweek.AddDays(7))
@@ -173,9 +173,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			// Draw day background, and background month.
 			// Background month occupies the center box from first sun to last sat.
 			// There're at least 3 full weeks for any month.
-			using (Brush br_bigmonfg = new SolidBrush(m_HostControl.BigMonthForeColor))
-			using (Brush br_bigmonfg2 = new SolidBrush(m_HostControl.BigMonthForeColor2))
-			using (Brush br_bigmonbg = new SolidBrush(m_HostControl.BigMonthBackColor))
+			Brush br_bigmonfg = m_HostControl.GetBrush(AppThemeColor.BigMonthForeColor);
+			Brush br_bigmonfg2 = m_HostControl.GetBrush(AppThemeColor.BigMonthForeColor2);
+			Brush br_bigmonbg = m_HostControl.GetBrush(AppThemeColor.BigMonthBackColor);
 			using (Font font = get_font_for_size(new SizeF(cx_day * 7, cy_day * 3), m_HostControl.Font, FontStyle.Bold, g, "12", m_BigMonthDrawFmt))
 			{
 				RectangleF rect_area = RectangleF.Empty, rect_area2 = RectangleF.Empty;
@@ -285,12 +285,12 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			dt = dateTime_last_dayofweek.AddDays(-6);
 			rect_day_box.Y = y_day;
 
-			using (Brush br_day = new SolidBrush(m_HostControl.DayForeColor))
-			using (Brush br_day2 = new SolidBrush(m_HostControl.DayForeColor2))
-			using (Brush br_dayalt = new SolidBrush(m_HostControl.DayAltForeColor))
-			using (Brush br_dayalt2 = new SolidBrush(m_HostControl.DayAltForeColor2))
-			using (Brush br_todaybg = new SolidBrush(m_HostControl.TodayBackColor))
-			using (Brush br_todayfg = new SolidBrush(m_HostControl.TodayForeColor))
+			Brush br_day = m_HostControl.GetBrush(AppThemeColor.DayForeColor);
+			Brush br_day2 = m_HostControl.GetBrush(AppThemeColor.DayForeColor2);
+			Brush br_dayalt = m_HostControl.GetBrush(AppThemeColor.DayAltForeColor);
+			Brush br_dayalt2 = m_HostControl.GetBrush(AppThemeColor.DayAltForeColor2);
+			Brush br_todaybg = m_HostControl.GetBrush(AppThemeColor.TodayBackColor);
+			Brush br_todayfg = m_HostControl.GetBrush(AppThemeColor.TodayForeColor);
 			{
 				for (int w = 0; w < m_HostControl.NumWeekShown; ++w, rect_day_box.Y += cy_day, rect_day_box.X = x_day)
 				{
@@ -565,19 +565,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			{
 				if (btn.ClientRectangle.Contains(btn.PointToClient(Control.MousePosition)))
 				{
-					Color brush_color;
-					if (Control.MouseButtons == MouseButtons.None)
-					{
-						brush_color = m_HostControl.NavHiliBackColor;
-					}
-					else
-					{
-						brush_color = m_HostControl.NavHiliBackColor2;
-					}
-					using (Brush brush = new SolidBrush(brush_color))
-					{
-						g.FillEllipse(brush, rect_border);
-					}
+					Brush br = m_HostControl.GetBrush(Control.MouseButtons == MouseButtons.None ? AppThemeColor.NavHiliBackColor : AppThemeColor.NavHiliBackColor2);
+					g.FillEllipse(br, rect_border);
 				}
 				g.DrawEllipse(pen_border, rect_border);
 				using (Pen pen_client = new Pen(btn.ForeColor, client_pen_width))

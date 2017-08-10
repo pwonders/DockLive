@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
@@ -36,6 +37,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			this.DoubleBuffered = true;
 			m_NumWeekShown = 5;
 			m_View = CalendarView.Month;
+			init_Colors();
 
 			btnNextMonth = new_Label();
 			btnNextMonth.MouseUp += btnNextMonth_MouseUp;
@@ -164,25 +166,25 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						break;
 					case AppTheme.System:
 						int a_header = 0xff, a_fg = 0xff, a_today = 0xff, a_month = 0xbf;
-						this.BackColor = Color.FromArgb(0, UIColor.AccentDark2);
-						this.NavForeColor = Color.FromArgb(a_header, UIColor.Background);
-						m_NavHiliBackColor = Color.FromArgb(a_header, UIColor.Accent);
-						m_NavHiliBackColor2 = Color.FromArgb(a_header, UIColor.AccentDark2);
-						m_YearForeColor = Color.FromArgb(a_header, UIColor.Background);
-						m_MonthForeColor = Color.FromArgb(a_header, UIColor.Background);
-						m_SunForeColor = Color.FromArgb(a_fg, UIColor.AccentLight1);
-						m_SatForeColor = Color.FromArgb(a_fg, UIColor.AccentLight2);
-						m_WeekdayForeColor = Color.FromArgb(a_fg, UIColor.AccentLight3);
-						m_WeekNumForeColor = Color.FromArgb(a_fg, UIColor.AccentDark3);
-						m_DayForeColor = Color.FromArgb(a_fg, UIColor.Background);
-						m_DayForeColor2 = Color.FromArgb(a_fg, UIColor.Foreground);
-						m_DayAltForeColor = Color.FromArgb(a_fg, UIColor.AccentDark1);
-						m_DayAltForeColor2 = Color.FromArgb(a_fg, UIColor.AccentDark3);
-						m_TodayBackColor = Color.FromArgb(a_today, UIColor.Accent);
-						m_TodayForeColor = Color.FromArgb(a_today, UIColor.Background);
-						m_BigMonthForeColor = Color.FromArgb(a_fg, UIColor.AccentDark3);
-						m_BigMonthForeColor2 = Color.FromArgb(a_fg, UIColor.AccentDark2);
-						m_BigMonthBackColor = Color.FromArgb(a_month, UIColor.AccentDark3);
+						this.BackColor = Color.Transparent;
+						SetColor(AppThemeColor.NavForeColor, Color.FromArgb(a_header, UIColor.Background));
+						SetColor(AppThemeColor.NavHiliBackColor, Color.FromArgb(a_header, UIColor.Accent));
+						SetColor(AppThemeColor.NavHiliBackColor2, Color.FromArgb(a_header, UIColor.AccentDark2));
+						SetColor(AppThemeColor.YearForeColor, Color.FromArgb(a_header, UIColor.Background));
+						SetColor(AppThemeColor.MonthForeColor, Color.FromArgb(a_header, UIColor.Background));
+						SetColor(AppThemeColor.WeekdayForeColor, Color.FromArgb(a_fg, UIColor.AccentLight3));
+						SetColor(AppThemeColor.SunForeColor, Color.FromArgb(a_fg, UIColor.AccentLight1));
+						SetColor(AppThemeColor.SatForeColor, Color.FromArgb(a_fg, UIColor.AccentLight2));
+						SetColor(AppThemeColor.WeekNumForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
+						SetColor(AppThemeColor.DayForeColor, Color.FromArgb(a_fg, UIColor.Background));
+						SetColor(AppThemeColor.DayForeColor2, Color.FromArgb(a_fg, UIColor.Foreground));
+						SetColor(AppThemeColor.DayAltForeColor, Color.FromArgb(a_fg, UIColor.AccentDark1));
+						SetColor(AppThemeColor.DayAltForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark3));
+						SetColor(AppThemeColor.TodayBackColor, Color.FromArgb(a_today, UIColor.Accent));
+						SetColor(AppThemeColor.TodayForeColor, Color.FromArgb(a_today, UIColor.Background));
+						SetColor(AppThemeColor.BigMonthBackColor, Color.FromArgb(a_month, UIColor.AccentDark3));
+						SetColor(AppThemeColor.BigMonthForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
+						SetColor(AppThemeColor.BigMonthForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark2));
 						break;
 					}
 					request_redraw();
@@ -213,139 +215,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return m_NumWeekShown; }
 		}
 
-		public Color NavForeColor
-		{
-			set
-			{
-				if (m_NavForeColor != value)
-				{
-					m_NavForeColor = value;
-					btnToday.ForeColor = m_NavForeColor;
-					btnPrevMonth.ForeColor = m_NavForeColor;
-					btnNextMonth.ForeColor = m_NavForeColor;
-					request_redraw();
-				}
-			}
-			get { return m_NavForeColor; }
-		}
-
-		public Color NavHiliBackColor
-		{
-			set { if (m_NavHiliBackColor != value) { m_NavHiliBackColor = value; request_redraw(); } }
-			get { return m_NavHiliBackColor; }
-		}
-
-		public Color NavHiliBackColor2
-		{
-			set { if (m_NavHiliBackColor2 != value) { m_NavHiliBackColor2 = value; request_redraw(); } }
-			get { return m_NavHiliBackColor2; }
-		}
-
-		public Color YearForeColor
-		{
-			set { if (m_YearForeColor != value) { m_YearForeColor = value; request_redraw(); } }
-			get { return m_YearForeColor; }
-		}
-
-		public Color MonthForeColor
-		{
-			set { if (m_MonthForeColor != value) { m_MonthForeColor = value; request_redraw(); } }
-			get { return m_MonthForeColor; }
-		}
-
-		public Color SunForeColor
-		{
-			set { if (m_SunForeColor != value) { m_SunForeColor = value; request_redraw(); } }
-			get { return m_SunForeColor; }
-		}
-
-		public Color SatForeColor
-		{
-			set { if (m_SatForeColor != value) { m_SatForeColor = value; request_redraw(); } }
-			get { return m_SatForeColor; }
-		}
-
-		public Color WeekdayForeColor
-		{
-			set { if (m_WeekdayForeColor != value) { m_WeekdayForeColor = value; request_redraw(); } }
-			get { return m_WeekdayForeColor; }
-		}
-
-		public Color WeekNumForeColor
-		{
-			set { if (m_WeekNumForeColor != value) { m_WeekNumForeColor = value; request_redraw(); } }
-			get { return m_WeekNumForeColor; }
-		}
-
-		public Color DayForeColor
-		{
-			set { if (m_DayForeColor != value) { m_DayForeColor = value; request_redraw(); } }
-			get { return m_DayForeColor; }
-		}
-
-		public Color DayForeColor2
-		{
-			set { if (m_DayForeColor2 != value) { m_DayForeColor2 = value; request_redraw(); } }
-			get { return m_DayForeColor2; }
-		}
-
-		public Color DayAltForeColor
-		{
-			set { if (m_DayAltForeColor != value) { m_DayAltForeColor = value; request_redraw(); } }
-			get { return m_DayAltForeColor; }
-		}
-
-		public Color DayAltForeColor2
-		{
-			set { if (m_DayAltForeColor2 != value) { m_DayAltForeColor2 = value; request_redraw(); } }
-			get { return m_DayAltForeColor2; }
-		}
-
-		public Color TodayBackColor
-		{
-			set { if (m_TodayBackColor != value) { m_TodayBackColor = value; request_redraw(); } }
-			get { return m_TodayBackColor; }
-		}
-
-		public Color TodayForeColor
-		{
-			set { if (m_TodayForeColor != value) { m_TodayForeColor = value; request_redraw(); } }
-			get { return m_TodayForeColor; }
-		}
-
-		public Color BigMonthForeColor
-		{
-			set { if (m_BigMonthForeColor != value) { m_BigMonthForeColor = value; request_redraw(); } }
-			get { return m_BigMonthForeColor; }
-		}
-
-		public Color BigMonthForeColor2
-		{
-			set { if (m_BigMonthForeColor2 != value) { m_BigMonthForeColor2 = value; request_redraw(); } }
-			get { return m_BigMonthForeColor2; }
-		}
-
-		public Color BigMonthBackColor
-		{
-			set { if (m_BigMonthBackColor != value) { m_BigMonthBackColor = value; request_redraw(); } }
-			get { return m_BigMonthBackColor; }
-		}
-
 		const int DEFAULT_NUMWEEKSHOWN = 18;
-		static readonly Color DARK_BACKCOLOR = Color.FromArgb(0x30, 0x30, 0x30);
-		static readonly Color DARK_NAVIGATION_COLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_YEAR_COLOR = Color.FromArgb(0xff, 0xff, 0xff);
-		static readonly Color DARK_MONTH_COLOR = Color.FromArgb(0xff, 0xff, 0xff);
-		static readonly Color DARK_DAY_COLOR = Color.FromArgb(0xff, 0xff, 0xff);
-		static readonly Color DARK_DAYALT_COLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_SUNDAY_COLOR = Color.Red;
-		static readonly Color DARK_SATURDAY_COLOR = Color.Orange;
-		static readonly Color DARK_WEEKDAY_COLOR = Color.FromArgb(0xff, 0xff, 0xff);
-		static readonly Color DARK_WEEKNUMBER_COLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_TODAY_BACKCOLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_TODAY_FORECOLOR = Color.FromArgb(0x80, 0x80, 0x80);
-		static readonly Color DARK_MONTH_BACKCOLOR = Color.FromArgb(0x10, 0x10, 0x10);
-		static readonly Color DARK_MONTH_FORECOLOR = Color.FromArgb(0x30, 0x30, 0x30);
 		static GregorianCalendar s_GregorianCalendar;
 
 		int m_TopbarSize;

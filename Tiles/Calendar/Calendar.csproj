@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarControl.Chinese.cs" />
+    <Compile Include="CalendarControl.Colors.cs" />
     <Compile Include="CalendarControl.cs" />
     <Compile Include="CalendarRenderer.cs" />
     <Compile Include="DockLiveTile.cs" />
