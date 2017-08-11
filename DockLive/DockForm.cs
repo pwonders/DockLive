@@ -150,16 +150,16 @@ namespace pWonders.App.DockLive
 			if (e.Category == UserPreferenceCategory.Desktop)
 			{
 				Rectangle rect = Desktop.Screen.WorkingArea;
-				if (this.Visible)
+				if (m_Shown)
 				{
 					int cx = Desktop.ActionCenter.Bounds.Width;
 					m_FullWidth = cx > 0 ? cx : Desktop.Screen.WorkingArea.Width / 5;
-					this.SetDesktopBounds(rect.Right - m_FullWidth, rect.Top, m_FullWidth, rect.Height);
+					this.SetDesktopBounds(rect.Right - m_FullWidth, 0, m_FullWidth, rect.Height);
 					m_FullWidth = this.Width;
 				}
 				else
 				{
-					this.SetDesktopBounds(rect.Right - this.Width, rect.Top, this.Width, rect.Height);
+					this.SetDesktopBounds(this.Left, 0, this.Width, rect.Height);
 				}
 			}
 			// Is this scroll bar width?
