@@ -228,13 +228,6 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		AppTheme m_Theme;
 		CalendarView m_View;
 
-		Color m_NavForeColor, m_NavHiliBackColor, m_NavHiliBackColor2;
-		Color m_YearForeColor, m_MonthForeColor;
-		Color m_SunForeColor, m_SatForeColor, m_WeekdayForeColor, m_WeekNumForeColor;
-		Color m_DayForeColor, m_DayForeColor2, m_DayAltForeColor, m_DayAltForeColor2;
-		Color m_TodayBackColor, m_TodayForeColor;
-		Color m_BigMonthForeColor, m_BigMonthForeColor2, m_BigMonthBackColor;
-
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
@@ -419,7 +412,6 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		Label new_Label()
 		{
 			Label lbl = new Label();
-			lbl.ForeColor = m_NavForeColor;
 			lbl.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			lbl.MouseEnter += btn_MouseEnter;
 			lbl.MouseLeave += btn_MouseLeave;
