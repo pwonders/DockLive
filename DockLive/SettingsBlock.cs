@@ -71,7 +71,6 @@ namespace pWonders.App.DockLive
 			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
 			Control btn = sender as Control;
-			System.Diagnostics.Debug.WriteLine(btn.Name);
 			RectangleF rect_arrow = btn.ClientRectangle;
 			rect_arrow.Inflate(rect_arrow.Width / -4, rect_arrow.Height / -4);
 			using (Pen pen = new Pen(btn.ForeColor))
