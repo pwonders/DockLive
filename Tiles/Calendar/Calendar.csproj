@@ -43,6 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\pWonders.Lib\pWonders\pWonders.csproj">
+      <Project>{e46b7a27-b1aa-4658-9936-ccafd1aa56e3}</Project>
+      <Name>pWonders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\pWonders.Lib\Windows.Forms\pWonders.Windows.Forms.csproj">
       <Project>{2d900f44-d6bf-4d8a-b098-97b37a9f2803}</Project>
       <Name>pWonders.Windows.Forms</Name>

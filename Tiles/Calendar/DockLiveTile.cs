@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using pWonders;
 using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive.Tiles.Calendar
@@ -8,12 +9,41 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 	{
 		public DockLiveTile()
 		{
-			m_Control = new CalendarControl();
+			m_Control = new CalendarControl(this);
+		}
+
+		public void OnAttachTile(ITileHost host)
+		{
+			m_Host = host;
+			OnThemeChanged(host.Theme);
+			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width - m_Control.Margin.Vertical);
+		}
+
+		public void OnDetachTile()
+		{
+		}
+
+		public void OnThemeChanged(AppTheme theme)
+		{
+			m_Control.Theme = theme;
+		}
+
+		public void OnSettingsOpened()
+		{
+		}
+
+		public void OnSettingsClosed()
+		{
 		}
 
 		public string Name
 		{
 			get { return "Calendar"; }
+		}
+
+		public string UniqueName
+		{
+			get { return SingleInstance.GetUniqueName(); }
 		}
 
 		public string Version
@@ -26,26 +56,12 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return Application.CompanyName; }
 		}
 
-		public Control Control
+		public TileChildControl Control
 		{
 			get { return m_Control; }
 		}
 
-		public void OnAttachTile(ITileHost host)
-		{
-			m_Host = host;
-			m_Control.Theme = m_Host.Theme;
-			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width - m_Control.Margin.Vertical);
-		}
-
-		public void OnDetachTile()
-		{
-		}
-
-		public void OnThemeChanged(AppTheme theme)
-		{
-			m_Control.Theme = theme;
-		}
+		public TileChildControl SettingsControl { get { return null; } }
 
 		CalendarControl m_Control;
 		ITileHost m_Host;

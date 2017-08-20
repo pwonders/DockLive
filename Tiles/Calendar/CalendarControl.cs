@@ -10,7 +10,7 @@ using pWonders.App.DockLive.TileInterface;
 namespace pWonders.App.DockLive.Tiles.Calendar
 {
 	[System.ComponentModel.DesignerCategory("")]
-	partial class CalendarControl : UserControl
+	partial class CalendarControl : TileChildControl
 	{
 		public enum CalendarView { Month, Day, Year };
 
@@ -29,7 +29,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return s_GregorianCalendar; }
 		}
 
-		public CalendarControl()
+		public CalendarControl(ITile tile) : base(tile)
 		{
 			m_Renderer = new CalendarRenderer(this);
 			m_NumWeekShown = DEFAULT_NUMWEEKSHOWN;
@@ -150,49 +150,6 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			}
 		}
 
-		[DefaultValue(AppTheme.System)]
-		public AppTheme Theme
-		{
-			set
-			{
-				if (m_Theme != value)
-				{
-					m_Theme = value;
-					switch (m_Theme)
-					{
-					case AppTheme.Dark:
-						break;
-					case AppTheme.Light:
-						break;
-					case AppTheme.System:
-						int a_header = 0xff, a_fg = 0xff, a_today = 0xff, a_month = 0xbf;
-						this.BackColor = Color.Transparent;
-						SetColor(AppThemeColor.NavForeColor, Color.FromArgb(a_header, UIColor.Background));
-						SetColor(AppThemeColor.NavHiliBackColor, Color.FromArgb(a_header, UIColor.Accent));
-						SetColor(AppThemeColor.NavHiliBackColor2, Color.FromArgb(a_header, UIColor.AccentDark2));
-						SetColor(AppThemeColor.YearForeColor, Color.FromArgb(a_header, UIColor.Background));
-						SetColor(AppThemeColor.MonthForeColor, Color.FromArgb(a_header, UIColor.Background));
-						SetColor(AppThemeColor.WeekdayForeColor, Color.FromArgb(a_fg, UIColor.AccentLight3));
-						SetColor(AppThemeColor.SunForeColor, Color.FromArgb(a_fg, UIColor.AccentLight1));
-						SetColor(AppThemeColor.SatForeColor, Color.FromArgb(a_fg, UIColor.AccentLight2));
-						SetColor(AppThemeColor.WeekNumForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
-						SetColor(AppThemeColor.DayForeColor, Color.FromArgb(a_fg, UIColor.Background));
-						SetColor(AppThemeColor.DayForeColor2, Color.FromArgb(a_fg, UIColor.Foreground));
-						SetColor(AppThemeColor.DayAltForeColor, Color.FromArgb(a_fg, UIColor.AccentDark1));
-						SetColor(AppThemeColor.DayAltForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark3));
-						SetColor(AppThemeColor.TodayBackColor, Color.FromArgb(a_today, UIColor.Accent));
-						SetColor(AppThemeColor.TodayForeColor, Color.FromArgb(a_today, UIColor.Background));
-						SetColor(AppThemeColor.BigMonthBackColor, Color.FromArgb(a_month, UIColor.AccentDark3));
-						SetColor(AppThemeColor.BigMonthForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
-						SetColor(AppThemeColor.BigMonthForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark2));
-						break;
-					}
-					request_redraw();
-				}
-			}
-			get { return m_Theme; }
-		}
-
 		[Browsable(false)]
 		public CalendarView View
 		{
@@ -225,8 +182,42 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		DateTime m_FirstLastDayOfWeek;
 		CalendarRenderer m_Renderer;
 		int m_NumWeekShown;
-		AppTheme m_Theme;
 		CalendarView m_View;
+
+		protected override void OnThemeChanged(EventArgs e)
+		{
+			base.OnThemeChanged(e);
+			switch (base.Theme)
+			{
+			case AppTheme.System:
+				int a_header = 0xff, a_fg = 0xff, a_today = 0xff, a_month = 0xbf;
+				this.BackColor = Color.Transparent;
+				SetColor(AppThemeColor.NavForeColor, Color.FromArgb(a_header, UIColor.Background));
+				SetColor(AppThemeColor.NavHiliBackColor, Color.FromArgb(a_header, UIColor.Accent));
+				SetColor(AppThemeColor.NavHiliBackColor2, Color.FromArgb(a_header, UIColor.AccentDark2));
+				SetColor(AppThemeColor.YearForeColor, Color.FromArgb(a_header, UIColor.Background));
+				SetColor(AppThemeColor.MonthForeColor, Color.FromArgb(a_header, UIColor.Background));
+				SetColor(AppThemeColor.WeekdayForeColor, Color.FromArgb(a_fg, UIColor.AccentLight3));
+				SetColor(AppThemeColor.SunForeColor, Color.FromArgb(a_fg, UIColor.AccentLight1));
+				SetColor(AppThemeColor.SatForeColor, Color.FromArgb(a_fg, UIColor.AccentLight2));
+				SetColor(AppThemeColor.WeekNumForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
+				SetColor(AppThemeColor.DayForeColor, Color.FromArgb(a_fg, UIColor.Background));
+				SetColor(AppThemeColor.DayForeColor2, Color.FromArgb(a_fg, UIColor.Foreground));
+				SetColor(AppThemeColor.DayAltForeColor, Color.FromArgb(a_fg, UIColor.AccentDark1));
+				SetColor(AppThemeColor.DayAltForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark3));
+				SetColor(AppThemeColor.TodayBackColor, Color.FromArgb(a_today, UIColor.Accent));
+				SetColor(AppThemeColor.TodayForeColor, Color.FromArgb(a_today, UIColor.Background));
+				SetColor(AppThemeColor.BigMonthBackColor, Color.FromArgb(a_month, UIColor.AccentDark3));
+				SetColor(AppThemeColor.BigMonthForeColor, Color.FromArgb(a_fg, UIColor.AccentDark3));
+				SetColor(AppThemeColor.BigMonthForeColor2, Color.FromArgb(a_fg, UIColor.AccentDark2));
+				break;
+			case AppTheme.Dark:
+				break;
+			case AppTheme.Light:
+				break;
+			}
+			request_redraw();
+		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{

@@ -109,12 +109,22 @@ namespace pWonders.App.DockLive
 
 			this.SuspendLayout();
 			tblTiles.SuspendLayout();
+			int num = 0;
 			foreach (ITile tile in m_Loader.Load())
 			{
+				num++;
 				tile.Control.Dock = DockStyle.Fill;
-				tile.Control.Margin = new Padding(4);
+				if (num == 1)
+				{
+					tile.Control.Margin = new Padding(0, 0, 0, 0);
+				}
+				else
+				{
+					tile.Control.Margin = new Padding(0, 2, 0, 0);
+				}
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
+				tile.Control.MouseUp += Tile_Control_MouseUp;
 			}
 			/*
 			foreach (RowStyle rs in tblTiles.RowStyles)
@@ -130,7 +140,10 @@ namespace pWonders.App.DockLive
 		protected override void OnDeactivate(EventArgs e)
 		{
 			base.OnDeactivate(e);
-			m_Animator.BeginAutoHide();
+			if (this.Tag == null)
+			{
+				m_Animator.BeginAutoHide();
+			}
 		}
 
 		protected override void OnClosed(EventArgs e)
@@ -168,6 +181,47 @@ namespace pWonders.App.DockLive
 				pnlScroller.Width = m_FullWidth + SystemInformation.VerticalScrollBarWidth;
 			}
 			// TODO: WM_DWMCOLORIZATIONCOLORCHANGED
+		}
+
+		private void Tile_Control_MouseUp(object sender, MouseEventArgs e)
+		{
+			TileChildControl ctrl = sender as TileChildControl;
+			if (e.Button == MouseButtons.Right && ctrl.ClientRectangle.Contains(e.Location))
+			{
+				// If not already in settings mode.
+				if (ctrl.Parent == tblTiles)
+				{
+					ctrl.Tile.OnSettingsOpened();
+					tblTiles.SuspendLayout();
+					TableLayoutPanelCellPosition pos = tblTiles.GetPositionFromControl(ctrl);
+					SettingsBlock block = new SettingsBlock(ctrl.Tile);
+					switch (m_Theme)
+					{
+					case AppTheme.System:
+						block.BackColor = Color.FromArgb(0x7f, UIColor.Blend(UIColor.AccentDark3, Color.Black, 0x7f));
+						block.ForeColor = UIColor.Background;
+						break;
+					case AppTheme.Dark:
+					case AppTheme.Light:
+						break;
+					}
+					block.GoBack += SettingsBlock_GoBack;
+					tblTiles.Controls.Remove(ctrl);
+					tblTiles.Controls.Add(block, pos.Column, pos.Row);
+					tblTiles.ResumeLayout();
+				}
+			}
+		}
+
+		private void SettingsBlock_GoBack(object sender, EventArgs e)
+		{
+			SettingsBlock block = sender as SettingsBlock;
+			tblTiles.SuspendLayout();
+			TableLayoutPanelCellPosition pos = tblTiles.GetPositionFromControl(block);
+			tblTiles.Controls.Remove(block);
+			tblTiles.Controls.Add(block.Tile.Control, pos.Column, pos.Row);
+			tblTiles.ResumeLayout();
+			block.Tile.OnSettingsClosed();
 		}
 
 		private void pnlScroller_ClientSizeChanged(object sender, EventArgs e)
