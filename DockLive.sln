@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockLiveTileInterface", "Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pWonders.Windows.Forms", "..\..\pWonders.Lib\Windows.Forms\pWonders.Windows.Forms.csproj", "{2D900F44-D6BF-4D8A-B098-97B37A9F2803}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slideshow", "Tiles\Slideshow\Slideshow.csproj", "{4195C42A-0E5B-4CDD-B537-F42ACF6403C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D900F44-D6BF-4D8A-B098-97B37A9F2803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4195C42A-0E5B-4CDD-B537-F42ACF6403C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4195C42A-0E5B-4CDD-B537-F42ACF6403C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4195C42A-0E5B-4CDD-B537-F42ACF6403C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4195C42A-0E5B-4CDD-B537-F42ACF6403C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
