@@ -399,10 +399,10 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						PointF pt_bot = new PointF(pt_top.X, rect_arrow.Bottom);
 						PointF pt_left = new PointF(rect_arrow.Left, rect_arrow.Top + rect_arrow.Height / 2);
 						PointF pt_right = new PointF(rect_arrow.Right, pt_left.Y);
-						PointF[] points_left = new PointF[] { pt_top, pt_bot, pt_left };
-						PointF[] points_right = new PointF[] { pt_top, pt_bot, pt_right };
-						g.DrawCurve(pen_client, points_left);
-						g.DrawCurve(pen_client, points_right);
+						PointF[] points_line = new PointF[] { pt_top, pt_bot };
+						PointF[] points_arrow = new PointF[] { pt_left, pt_bot, pt_right };
+						g.DrawLines(pen_client, points_line);
+						g.DrawLines(pen_client, points_arrow);
 					}
 				)
 			);
@@ -425,10 +425,10 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 						PointF pt_bot = new PointF(pt_top.X, rect_arrow.Bottom + 1);
 						PointF pt_left = new PointF(rect_arrow.Left, rect_arrow.Top + rect_arrow.Height / 2);
 						PointF pt_right = new PointF(rect_arrow.Right, pt_left.Y);
-						PointF[] points_left = new PointF[] { pt_bot, pt_top, pt_left };
-						PointF[] points_right = new PointF[] { pt_bot, pt_top, pt_right };
-						g.DrawCurve(pen_client, points_left);
-						g.DrawCurve(pen_client, points_right);
+						PointF[] points_line = new PointF[] { pt_bot, pt_top };
+						PointF[] points_arrow = new PointF[] { pt_left, pt_top, pt_right };
+						g.DrawLines(pen_client, points_line);
+						g.DrawLines(pen_client, points_arrow);
 					}
 				)
 			);
