@@ -51,7 +51,7 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 				{
 					m_StayForSecond = value;
 					string val = m_StayForSecond < 60 ? m_StayForSecond + " seconds" : (m_StayForSecond / 60) + " minutes";
-					lblStayOn.Text = "Change picture every " + val;
+					lblStayOn.Text = "Change picture every " + val + ".";
 				}
 			}
 			get { return m_StayForSecond; }

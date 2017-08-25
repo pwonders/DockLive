@@ -21,10 +21,10 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			m_TimerSlide = new Timer();
 			m_TimerSlide.Interval = 100;
 			m_TimerSlide.Tick += TimerSlide_Tick;
-			m_ImageFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 			m_Set = new LinkedList<string>();
 			m_DisplaySet = new LinkedList<DisplayData>();
-			StayForSecond = 5;
+			this.StayForSecond = 5;
+			this.ImageFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 		}
 
 		public void PauseSlideShow()
@@ -142,18 +142,32 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			}
 		}
 
+		void get_pictures(DirectoryInfo folder)
+		{
+			foreach (var f in folder.EnumerateFileSystemInfos())
+			{
+				DirectoryInfo di = f as DirectoryInfo;
+				if (di != null)
+				{
+					get_pictures(di);
+				}
+				else
+				{
+					string name = f.Name.ToLowerInvariant();
+					if (name.EndsWith(".jpg") || name.EndsWith(".png"))
+					{
+						m_Set.AddLast(f.FullName);
+					}
+				}
+			}
+		}
+
 		void init_Slideshow()
 		{
 			m_Set.Clear();
 			try
 			{
-				var files = from f in new DirectoryInfo(m_ImageFolder).EnumerateFiles()
-							where f.Name.ToLowerInvariant().EndsWith(".jpg") || f.Name.ToLowerInvariant().EndsWith(".png")
-							select f;
-				foreach (var f in files)
-				{
-					m_Set.AddLast(f.FullName);
-				}
+				get_pictures(new DirectoryInfo(m_ImageFolder));
 			}
 			catch { }
 			m_LastStayFor = default(TimeSpan);
