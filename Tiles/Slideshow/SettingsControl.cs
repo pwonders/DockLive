@@ -68,8 +68,8 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			switch (base.Theme)
 			{
 			case AppTheme.System:
-				m_TextBackColor = UIColor.Blend(UIColor.AccentDark3, Color.Black, 0x7f);
-				m_TextForeColor = UIColor.AccentDark1;
+				m_TextBackColor = Color.FromArgb(0xbf, 0xbf, 0xbf);
+				m_TextForeColor = Color.FromArgb(0x3f, 0x3f, 0x3f);
 				break;
 			case AppTheme.Dark:
 			case AppTheme.Light:

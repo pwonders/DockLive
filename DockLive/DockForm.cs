@@ -198,7 +198,7 @@ namespace pWonders.App.DockLive
 					switch (m_Theme)
 					{
 					case AppTheme.System:
-						block.BackColor = Color.FromArgb(0x7f, UIColor.Blend(UIColor.AccentDark3, Color.Black, 0x7f));
+						block.BackColor = XColor.Rotate(Color.FromArgb(0x7f, UIColor.Accent), -45);
 						block.ForeColor = UIColor.Background;
 						break;
 					case AppTheme.Dark:
