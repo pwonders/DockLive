@@ -37,12 +37,15 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			m_Control.PauseSlideShow();
 			m_SettingsControl.ImageFolder = m_Control.ImageFolder;
 			m_SettingsControl.StayForSecond = m_Control.StayForSecond;
+			m_SettingsControl.FitMode = m_Control.FitMode;
 		}
 
 		public void OnSettingsClosed()
 		{
 			m_Control.ImageFolder = m_SettingsControl.ImageFolder;
 			m_Control.StayForSecond = m_SettingsControl.StayForSecond;
+			m_Control.FitMode = m_SettingsControl.FitMode;
+			m_Control.PrepareSlideShow();
 			m_Control.ResumeSlideShow();
 		}
 

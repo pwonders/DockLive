@@ -12,7 +12,6 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 	{
 		public SettingsControl(ITile tile) : base(tile)
 		{
-			this.Font = SystemFonts.StatusFont;
 			this.DoubleBuffered = true;
 			InitializeComponent();
 		}
@@ -51,15 +50,29 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 				{
 					m_StayForSecond = value;
 					string val = m_StayForSecond < 60 ? m_StayForSecond + " seconds" : (m_StayForSecond / 60) + " minutes";
-					lblStayOn.Text = "Change picture every " + val + ".";
+					lblStayOn.Text = "Change picture every " + val;
 				}
 			}
 			get { return m_StayForSecond; }
 		}
 
-		readonly int[] m_StayForOptions = { 5, 10, 20, 40, 60 * 2 };
+		public FitMode FitMode
+		{
+			set
+			{
+				if (m_FitMode != value)
+				{
+					m_FitMode = value;
+					lblFitMode.Text = m_FitMode + " picture";
+				}
+			}
+			get { return m_FitMode; }
+		}
+
+		readonly int[] m_StayForOptions = { 2, 5, 10, 20, 40, 60 * 2 };
 		string m_ImageFolder, m_ImageFolderDisplayName;
 		int m_StayForSecond;
+		FitMode m_FitMode;
 		Color m_TextBackColor, m_TextForeColor;
 
 		protected override void OnThemeChanged(EventArgs e)
@@ -76,6 +89,20 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 				break;
 			}
 			this.Invalidate();
+		}
+
+		protected override void OnFontChanged(EventArgs e)
+		{
+			base.OnFontChanged(e);
+			Font font = new Font(this.Font, FontStyle.Underline);
+			if (lblStayOn != null)
+			{
+				lblStayOn.Font = font;
+			}
+			if (lblFitMode != null)
+			{
+				lblFitMode.Font = font;
+			}
 		}
 
 		private void btnPick_Click(object sender, EventArgs e)
@@ -103,6 +130,11 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			{
 				this.StayForSecond = m_StayForOptions[0];
 			}
+		}
+
+		private void lblFitMode_Click(object sender, EventArgs e)
+		{
+			this.FitMode = (FitMode) (((int) (this.FitMode + 1)) % Enum.GetValues(typeof(FitMode)).Length);
 		}
 
 		private void pnlPick_Paint(object sender, PaintEventArgs e)
