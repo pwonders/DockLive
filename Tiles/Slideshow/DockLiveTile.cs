@@ -19,7 +19,7 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		{
 			this.Host = host;
 			OnThemeChanged(host.Theme);
-			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width / 3 - m_Control.Margin.Vertical);
+			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width / 2 - m_Control.Margin.Vertical);
 		}
 
 		public void OnDetachTile()
@@ -35,17 +35,16 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		public void OnSettingsOpened()
 		{
 			m_Control.PauseSlideShow();
-			m_SettingsControl.ImageFolder = m_Control.ImageFolder;
+			m_SettingsControl.ImageFolder = m_Control.ImagePath;
 			m_SettingsControl.StayForSecond = m_Control.StayForSecond;
 			m_SettingsControl.FitMode = m_Control.FitMode;
 		}
 
 		public void OnSettingsClosed()
 		{
-			m_Control.ImageFolder = m_SettingsControl.ImageFolder;
+			m_Control.ImagePath = m_SettingsControl.ImageFolder;
 			m_Control.StayForSecond = m_SettingsControl.StayForSecond;
 			m_Control.FitMode = m_SettingsControl.FitMode;
-			m_Control.PrepareSlideShow();
 			m_Control.ResumeSlideShow();
 		}
 
