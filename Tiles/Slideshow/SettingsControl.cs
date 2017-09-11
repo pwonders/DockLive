@@ -81,7 +81,7 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			switch (base.Theme)
 			{
 			case AppTheme.System:
-				m_TextBackColor = Color.FromArgb(0xbf, 0xbf, 0xbf);
+				m_TextBackColor = Color.FromArgb(0xfe, 0xbf, 0xbf, 0xbf);
 				m_TextForeColor = Color.FromArgb(0x3f, 0x3f, 0x3f);
 				break;
 			case AppTheme.Dark:
@@ -139,12 +139,18 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 
 		private void pnlPick_Paint(object sender, PaintEventArgs e)
 		{
-			Control ctrl = sender as Control;
-			using (Brush br_bg = new SolidBrush(Color.FromArgb(0xfe, m_TextBackColor)))
+			Rectangle rect_bg = (sender as Control).ClientRectangle, rect_fg = rect_bg;
+			rect_fg.Width -= (btnPick.Width + btnPick.Margin.Horizontal);
+			using (Bitmap bmp = new Bitmap(rect_bg.Width, rect_bg.Height))
+			using (Graphics g = Graphics.FromImage(bmp))
+			using (Brush br_bg = new SolidBrush(m_TextBackColor))
 			{
-				e.Graphics.FillRectangle(br_bg, e.ClipRectangle);
-				TextFormatFlags format = TextFormatFlags.PathEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.TextBoxControl;
-				TextRenderer.DrawText(e.Graphics, m_ImageFolderDisplayName, this.Font, ctrl.ClientRectangle, m_TextForeColor, format);
+				g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixel;
+				g.FillRectangle(br_bg, e.ClipRectangle);
+				TextFormatFlags format = TextFormatFlags.NoPrefix | TextFormatFlags.PathEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.TextBoxControl;
+				// Need to specify backcolor or the antialiasing will look poor.
+				TextRenderer.DrawText(g, m_ImageFolderDisplayName, this.Font, rect_fg, m_TextForeColor, m_TextBackColor, format);
+				e.Graphics.DrawImage(bmp, Point.Empty);
 			}
 		}
 
