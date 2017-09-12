@@ -10,11 +10,11 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		public DockLiveTile()
 		{
 			m_Control = new CalendarControl(this);
+			m_SettingsControl = new SettingsControl(this);
 		}
 
 		public void OnAttachTile(ITileHost host)
 		{
-			m_Host = host;
 			OnThemeChanged(host.Theme);
 			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width - m_Control.Margin.Vertical);
 		}
@@ -30,10 +30,12 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public void OnSettingsOpened()
 		{
+			m_SettingsControl.ShowAltCalendar = m_Control.ShowAltCalendar;
 		}
 
 		public void OnSettingsClosed()
 		{
+			m_Control.ShowAltCalendar = m_SettingsControl.ShowAltCalendar;
 		}
 
 		public string Name
@@ -61,9 +63,12 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return m_Control; }
 		}
 
-		public TileChildControl SettingsControl { get { return null; } }
+		public TileChildControl SettingsControl
+		{
+			get { return m_SettingsControl; }
+		}
 
 		CalendarControl m_Control;
-		ITileHost m_Host;
+		SettingsControl m_SettingsControl;
 	}
 }

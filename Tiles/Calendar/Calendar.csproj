@@ -41,6 +41,12 @@
     <Compile Include="CalendarRenderer.cs" />
     <Compile Include="DockLiveTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\pWonders.Lib\pWonders\pWonders.csproj">

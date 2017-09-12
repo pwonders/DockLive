@@ -324,7 +324,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public virtual void DrawAltDates(Graphics g, DateTime dateTime, Brush brush, RectangleF rect, RectangleF bounds)
 		{
-			if (true)   // Depends on CalendarControl show properties.
+			if (m_HostControl.ShowAltCalendar)
 			{
 				if (rect.Height > 0)
 				{

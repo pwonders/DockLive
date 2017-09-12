@@ -36,6 +36,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 			this.DoubleBuffered = true;
 			m_NumWeekShown = 5;
+			m_ShowAltCalendar = true;
 			m_View = CalendarView.Month;
 			init_Colors();
 
@@ -172,6 +173,19 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return m_NumWeekShown; }
 		}
 
+		public bool ShowAltCalendar
+		{
+			set
+			{
+				if (m_ShowAltCalendar != value)
+				{
+					m_ShowAltCalendar = value;
+					this.Invalidate();
+				}
+			}
+			get { return m_ShowAltCalendar; }
+		}
+
 		const int DEFAULT_NUMWEEKSHOWN = 18;
 		static GregorianCalendar s_GregorianCalendar;
 
@@ -183,6 +197,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		CalendarRenderer m_Renderer;
 		int m_NumWeekShown;
 		CalendarView m_View;
+		bool m_ShowAltCalendar;
 
 		protected override void OnThemeChanged(EventArgs e)
 		{

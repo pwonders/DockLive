@@ -73,6 +73,7 @@
 			// filePicker
 			// 
 			this.filePicker.Dock = System.Windows.Forms.DockStyle.Top;
+			this.filePicker.File = "";
 			this.filePicker.Location = new System.Drawing.Point(0, 0);
 			this.filePicker.Name = "filePicker";
 			this.filePicker.Size = new System.Drawing.Size(252, 46);
