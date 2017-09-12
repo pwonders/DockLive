@@ -55,6 +55,8 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 
 		LinkedList<SlideData> m_Set;
 
+		// TODO: see if Parallel class can speed up file enumeration:
+		// https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/how-to-iterate-file-directories-with-the-parallel-class
 		void enumerate_images(DirectoryInfo folder)
 		{
 			IEnumerable<FileSystemInfo> list = new List<FileSystemInfo>(0);

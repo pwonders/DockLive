@@ -29,11 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.btnPick = new System.Windows.Forms.Button();
-			this.pnlPick = new System.Windows.Forms.Panel();
-			this.lblStayOn = new System.Windows.Forms.Label();
-			this.lblFitMode = new System.Windows.Forms.Label();
-			this.pnlPick.SuspendLayout();
+			this.lblStayOn = new pWonders.App.DockLive.TileInterface.OptionLabel();
+			this.lblFitMode = new pWonders.App.DockLive.TileInterface.OptionLabel();
+			this.filePicker = new pWonders.App.DockLive.TileInterface.FilePicker();
 			this.SuspendLayout();
 			// 
 			// openFileDialog
@@ -41,29 +39,6 @@
 			this.openFileDialog.DereferenceLinks = false;
 			this.openFileDialog.RestoreDirectory = true;
 			this.openFileDialog.SupportMultiDottedExtensions = true;
-			// 
-			// btnPick
-			// 
-			this.btnPick.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.btnPick.Image = global::pWonders.App.DockLive.Tiles.Slideshow.Properties.Resources.OpenFolder_32x;
-			this.btnPick.Location = new System.Drawing.Point(209, 3);
-			this.btnPick.Name = "btnPick";
-			this.btnPick.Size = new System.Drawing.Size(40, 40);
-			this.btnPick.TabIndex = 2;
-			this.btnPick.UseVisualStyleBackColor = true;
-			this.btnPick.Click += new System.EventHandler(this.btnPick_Click);
-			// 
-			// pnlPick
-			// 
-			this.pnlPick.AutoSize = true;
-			this.pnlPick.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.pnlPick.Controls.Add(this.btnPick);
-			this.pnlPick.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnlPick.Location = new System.Drawing.Point(0, 0);
-			this.pnlPick.Name = "pnlPick";
-			this.pnlPick.Size = new System.Drawing.Size(252, 46);
-			this.pnlPick.TabIndex = 4;
-			this.pnlPick.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPick_Paint);
 			// 
 			// lblStayOn
 			// 
@@ -95,6 +70,15 @@
 			this.lblFitMode.Click += new System.EventHandler(this.lblFitMode_Click);
 			this.lblFitMode.DoubleClick += new System.EventHandler(this.lblFitMode_Click);
 			// 
+			// filePicker
+			// 
+			this.filePicker.Dock = System.Windows.Forms.DockStyle.Top;
+			this.filePicker.Location = new System.Drawing.Point(0, 0);
+			this.filePicker.Name = "filePicker";
+			this.filePicker.Size = new System.Drawing.Size(252, 46);
+			this.filePicker.TabIndex = 7;
+			this.filePicker.FilePicked += new System.EventHandler(this.filePicker_FilePicked);
+			// 
 			// SettingsControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(168F, 168F);
@@ -103,20 +87,18 @@
 			this.BackColor = System.Drawing.Color.Transparent;
 			this.Controls.Add(this.lblFitMode);
 			this.Controls.Add(this.lblStayOn);
-			this.Controls.Add(this.pnlPick);
+			this.Controls.Add(this.filePicker);
 			this.Name = "SettingsControl";
 			this.Size = new System.Drawing.Size(252, 137);
-			this.pnlPick.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.Button btnPick;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private System.Windows.Forms.Panel pnlPick;
-		private System.Windows.Forms.Label lblStayOn;
-		private System.Windows.Forms.Label lblFitMode;
+		private pWonders.App.DockLive.TileInterface.OptionLabel lblStayOn;
+		private pWonders.App.DockLive.TileInterface.OptionLabel lblFitMode;
+		private TileInterface.FilePicker filePicker;
 	}
 }

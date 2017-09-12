@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using Microsoft.Win32;
 using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive.Tiles.Slideshow
@@ -20,26 +16,9 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		{
 			set
 			{
-				if (m_ImageFolder != value)
-				{
-					m_ImageFolder = value;
-					this.ImageFolderDisplayName = get_display_name(m_ImageFolder);
-				}
+				filePicker.File = value;
 			}
 			get { return m_ImageFolder; }
-		}
-
-		public string ImageFolderDisplayName
-		{
-			set
-			{
-				if (m_ImageFolderDisplayName != value)
-				{
-					m_ImageFolderDisplayName = value;
-					pnlPick.Invalidate();
-				}
-			}
-			get { return m_ImageFolderDisplayName; }
 		}
 
 		public int StayForSecond
@@ -69,11 +48,10 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			get { return m_FitMode; }
 		}
 
-		readonly int[] m_StayForOptions = { 2, 5, 10, 20, 40, 60 * 2 };
-		string m_ImageFolder, m_ImageFolderDisplayName;
+		readonly int[] STAYFOROPTIONS = { 2, 5, 10, 20, 40, 60 * 2 };
+		string m_ImageFolder;
 		int m_StayForSecond;
 		FitMode m_FitMode;
-		Color m_TextBackColor, m_TextForeColor;
 
 		protected override void OnThemeChanged(EventArgs e)
 		{
@@ -81,8 +59,8 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			switch (base.Theme)
 			{
 			case AppTheme.System:
-				m_TextBackColor = Color.FromArgb(0xfe, 0xbf, 0xbf, 0xbf);
-				m_TextForeColor = Color.FromArgb(0x3f, 0x3f, 0x3f);
+				filePicker.BackColor = Color.FromArgb(0xfe, 0xbf, 0xbf, 0xbf);
+				filePicker.ForeColor = Color.FromArgb(0x3f, 0x3f, 0x3f);
 				break;
 			case AppTheme.Dark:
 			case AppTheme.Light:
@@ -91,44 +69,20 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			this.Invalidate();
 		}
 
-		protected override void OnFontChanged(EventArgs e)
-		{
-			base.OnFontChanged(e);
-			Font font = new Font(this.Font, FontStyle.Underline);
-			if (lblStayOn != null)
-			{
-				lblStayOn.Font = font;
-			}
-			if (lblFitMode != null)
-			{
-				lblFitMode.Font = font;
-			}
-		}
-
-		private void btnPick_Click(object sender, EventArgs e)
-		{
-			this.ParentForm.Tag = openFileDialog;
-			if (openFileDialog.ShowDialog(this.ParentForm) == DialogResult.OK)
-			{
-				this.ImageFolder = Path.GetDirectoryName(openFileDialog.FileName);
-			}
-			this.ParentForm.Tag = null;
-		}
-
 		private void lblStayOn_Click(object sender, EventArgs e)
 		{
 			int i = 0;
-			for (; i < m_StayForOptions.Length; i++)
+			for (; i < STAYFOROPTIONS.Length; i++)
 			{
-				if (this.StayForSecond == m_StayForOptions[i])
+				if (this.StayForSecond == STAYFOROPTIONS[i])
 				{
-					this.StayForSecond = m_StayForOptions[(i + 1) % m_StayForOptions.Length];
+					this.StayForSecond = STAYFOROPTIONS[(i + 1) % STAYFOROPTIONS.Length];
 					break;
 				}
 			}
-			if (i == m_StayForOptions.Length)
+			if (i == STAYFOROPTIONS.Length)
 			{
-				this.StayForSecond = m_StayForOptions[0];
+				this.StayForSecond = STAYFOROPTIONS[0];
 			}
 		}
 
@@ -137,38 +91,9 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			this.FitMode = (FitMode) (((int) (this.FitMode + 1)) % Enum.GetValues(typeof(FitMode)).Length);
 		}
 
-		private void pnlPick_Paint(object sender, PaintEventArgs e)
+		private void filePicker_FilePicked(object sender, EventArgs e)
 		{
-			Rectangle rect_bg = (sender as Control).ClientRectangle, rect_fg = rect_bg;
-			rect_fg.Width -= (btnPick.Width + btnPick.Margin.Horizontal);
-			using (Bitmap bmp = new Bitmap(rect_bg.Width, rect_bg.Height))
-			using (Graphics g = Graphics.FromImage(bmp))
-			using (Brush br_bg = new SolidBrush(m_TextBackColor))
-			{
-				g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixel;
-				g.FillRectangle(br_bg, e.ClipRectangle);
-				TextFormatFlags format = TextFormatFlags.NoPrefix | TextFormatFlags.PathEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.TextBoxControl;
-				// Need to specify backcolor or the antialiasing will look poor.
-				TextRenderer.DrawText(g, m_ImageFolderDisplayName, this.Font, rect_fg, m_TextForeColor, m_TextBackColor, format);
-				e.Graphics.DrawImage(bmp, Point.Empty);
-			}
-		}
-
-		string get_display_name(string path)
-		{
-			API.SHFILEINFO shfi;
-			if (API.SHGetFileInfo(path, API.FILE_ATTRIBUTE_NORMAL, out shfi, Marshal.SizeOf(typeof(API.SHFILEINFO)), API.SHGFI_DISPLAYNAME) != 0)
-			{
-				if (path.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries).Length > 1)
-				{
-					path = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar + shfi.szDisplayName;
-				}
-				else
-				{
-					path = shfi.szDisplayName;
-				}
-			}
-			return path;
+			m_ImageFolder = filePicker.File;
 		}
 	}
 }

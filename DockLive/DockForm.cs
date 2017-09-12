@@ -8,6 +8,9 @@ using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive
 {
+	/* TODO:
+	 * https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/double-buffered-graphics
+	 */
 	[System.ComponentModel.DesignerCategory("Form")]
 	public partial class DockForm : VForm, ITileHost
 	{
