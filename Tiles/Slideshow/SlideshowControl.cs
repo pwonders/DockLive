@@ -13,6 +13,21 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 	[System.ComponentModel.DesignerCategory("")]
 	class SlideshowControl : TileChildControl
 	{
+		public static string DefaultImagePath
+		{
+			get { return Environment.GetFolderPath(Environment.SpecialFolder.MyPictures); }
+		}
+
+		public static FitMode DefaultFitMode
+		{
+			get { return FitMode.Fill; }
+		}
+
+		public static int DefaultStayForSecond
+		{
+			get { return 2; }
+		}
+
 		public SlideshowControl(ITile tile) : base(tile)
 		{
 			// Required for proper color on blur background.
@@ -23,9 +38,9 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			m_TimerSlide.Tick += TimerSlide_Tick;
 			m_Provider = new LocalImageProvider();
 			m_Set = new LinkedList<SlideData>();
-			this.ImagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-			this.FitMode = FitMode.Fill;
-			this.StayForSecond = 2;
+			this.ImagePath = SlideshowControl.DefaultImagePath;
+			this.FitMode = SlideshowControl.DefaultFitMode;
+			this.StayForSecond = SlideshowControl.DefaultStayForSecond;
 
 			// The timer always runs to track changes.
 			m_TimerSlide.Start();

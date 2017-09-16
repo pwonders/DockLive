@@ -29,6 +29,11 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			get { return s_GregorianCalendar; }
 		}
 
+		public static bool DefaultShowAltCalendar
+		{
+			get { return true; }
+		}
+
 		public CalendarControl(ITile tile) : base(tile)
 		{
 			m_Renderer = new CalendarRenderer(this);
@@ -36,7 +41,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 			this.DoubleBuffered = true;
 			m_NumWeekShown = 5;
-			m_ShowAltCalendar = true;
+			m_ShowAltCalendar = CalendarControl.DefaultShowAltCalendar;
 			m_View = CalendarView.Month;
 			init_Colors();
 
