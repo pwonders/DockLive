@@ -75,6 +75,7 @@
     <Compile Include="SettingsBlock.Designer.cs">
       <DependentUpon>SettingsBlock.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="TileLoader.cs" />
     <EmbeddedResource Include="DockForm.resx">
       <DependentUpon>DockForm.cs</DependentUpon>

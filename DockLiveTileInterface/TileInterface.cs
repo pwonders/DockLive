@@ -21,6 +21,8 @@ namespace pWonders.App.DockLive.TileInterface
 		void OnThemeChanged(AppTheme theme);
 		void OnSettingsOpened();
 		void OnSettingsClosed();
+		void OnSettingsLoaded(IDictionary<string, string> settings);
+		void OnSettingsWanted(IDictionary<string, string> settings);
 		string Name { get; }
 		string UniqueName { get; }
 		string Version { get; }

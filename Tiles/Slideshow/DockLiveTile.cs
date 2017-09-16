@@ -49,6 +49,28 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			m_Control.ResumeSlideShow();
 		}
 
+		public void OnSettingsLoaded(IDictionary<string, string> settings)
+		{
+			m_Control.ImagePath = settings.Get(OPT_IMAGEPATH, SlideshowControl.DefaultImagePath);
+			FitMode fit_mode;
+			if (Enum.TryParse(settings.Get(OPT_FITMODE, string.Empty), out fit_mode))
+			{
+				m_Control.FitMode = fit_mode;
+			}
+			else
+			{
+				m_Control.FitMode = SlideshowControl.DefaultFitMode;
+			}
+			m_Control.StayForSecond = settings.Get(OPT_STAYFORSECOND, SlideshowControl.DefaultStayForSecond);
+		}
+
+		public void OnSettingsWanted(IDictionary<string, string> settings)
+		{
+			settings.Set(OPT_IMAGEPATH, m_SettingsControl.ImageFolder);
+			settings.Set(OPT_FITMODE, m_SettingsControl.FitMode.ToString());
+			settings.Set(OPT_STAYFORSECOND, m_SettingsControl.StayForSecond.ToString());
+		}
+
 		public ITileHost Host { set; get; }
 
 		public string Name
@@ -80,7 +102,10 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		{
 			get { return m_SettingsControl; }
 		}
-		
+
+		const string OPT_IMAGEPATH = "ImagePath";
+		const string OPT_FITMODE = "FitMode";
+		const string OPT_STAYFORSECOND = "StayForSecond";
 		SlideshowControl m_Control;
 		SettingsControl m_SettingsControl;
 		string m_UniqueName;

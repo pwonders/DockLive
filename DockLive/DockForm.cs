@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -41,6 +42,7 @@ namespace pWonders.App.DockLive
 			m_Animator.HideEnded += Animator_HideEnded;
 
 			m_Loader = new TileLoader();
+			m_AllSettings = new Dictionary<string, Dictionary<string, string>>();
 		}
 
 		[Browsable(false)]
@@ -94,6 +96,7 @@ namespace pWonders.App.DockLive
 		AppTheme m_Theme;
 		Animator m_Animator;
 		TileLoader m_Loader;
+		Dictionary<string, Dictionary<string, string>> m_AllSettings;
 
 		protected override CreateParams CreateParams
 		{
@@ -127,6 +130,10 @@ namespace pWonders.App.DockLive
 				{
 					tile.Control.Margin = new Padding(0, 2, 0, 0);
 				}
+				var set = new Dictionary<string, string>();
+				SettingsManager.Load(tile.UniqueName, set);
+				tile.OnSettingsLoaded(set);
+				m_AllSettings.Add(tile.UniqueName, set);
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
 				tile.Control.MouseUp += Tile_Control_MouseUp;
@@ -227,6 +234,8 @@ namespace pWonders.App.DockLive
 			tblTiles.Controls.Add(block.Tile.Control, pos.Column, pos.Row);
 			tblTiles.ResumeLayout();
 			block.Tile.OnSettingsClosed();
+			block.Tile.OnSettingsWanted(m_AllSettings[block.Tile.UniqueName]);
+			SettingsManager.Save(block.Tile.UniqueName, m_AllSettings[block.Tile.UniqueName]);
 		}
 
 		private void pnlScroller_ClientSizeChanged(object sender, EventArgs e)

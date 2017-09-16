@@ -40,6 +40,16 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 			m_Control.ShowAltCalendar = m_SettingsControl.ShowAltCalendar;
 		}
 
+		public void OnSettingsLoaded(IDictionary<string, string> settings)
+		{
+			m_Control.ShowAltCalendar = settings.Get(OPT_SHOWALTCALENDAR, CalendarControl.DefaultShowAltCalendar);
+		}
+
+		public void OnSettingsWanted(IDictionary<string, string> settings)
+		{
+			settings.Set(OPT_SHOWALTCALENDAR, m_SettingsControl.ShowAltCalendar.ToString());
+		}
+
 		public string Name
 		{
 			get { return "Calendar"; }
@@ -69,7 +79,8 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			get { return m_SettingsControl; }
 		}
-		
+
+		const string OPT_SHOWALTCALENDAR = "ShowAltCalendar";
 		CalendarControl m_Control;
 		SettingsControl m_SettingsControl;
 		string m_UniqueName;
