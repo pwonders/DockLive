@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
-using pWonders;
 using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive.Tiles.Calendar
@@ -11,6 +12,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			m_Control = new CalendarControl(this);
 			m_SettingsControl = new SettingsControl(this);
+			m_UniqueName = SingleInstance.GetUniqueName(Assembly.GetExecutingAssembly());
 		}
 
 		public void OnAttachTile(ITileHost host)
@@ -45,7 +47,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 
 		public string UniqueName
 		{
-			get { return SingleInstance.GetUniqueName(); }
+			get { return m_UniqueName; }
 		}
 
 		public string Version
@@ -67,8 +69,9 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			get { return m_SettingsControl; }
 		}
-
+		
 		CalendarControl m_Control;
 		SettingsControl m_SettingsControl;
+		string m_UniqueName;
 	}
 }

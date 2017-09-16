@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 using pWonders;
 
@@ -19,7 +20,8 @@ namespace pWonders.App.DockLive
 					Application.EnableVisualStyles();
 					Application.SetCompatibleTextRenderingDefault(false);
 					Application.Run(new DockForm());
-				}
+				},
+				Assembly.GetExecutingAssembly()
 			);
 		}
 	}
