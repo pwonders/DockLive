@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using Microsoft.Win32;
 using pWonders.App.DockLive.TileInterface;
 
@@ -31,7 +32,8 @@ namespace pWonders.App.DockLive
 			//this.DoubleBuffered = true;
 			this.Font = SystemFonts.StatusFont;
 			this.Opacity = 254 / 255.0;
-			this.Theme = AppTheme.System;
+			this.Theme = Properties.Settings.Default.Theme;
+			mnuTheme.MenuItems.Cast<MenuItem>().Where(m => m.Text == this.Theme.ToString()).First().Checked = true;
 			m_Shown = true;
 
 			m_Animator = new Animator(this);
@@ -284,6 +286,22 @@ namespace pWonders.App.DockLive
 			m_Shown = true;
 			// https://blogs.msdn.microsoft.com/oldnewthing/20080801-00/?p=21393/
 			this.Activate();
+		}
+
+		private void mnuThemeName_Click(object sender, EventArgs e)
+		{
+			foreach (MenuItem mnu in mnuTheme.MenuItems)
+			{
+				if (mnu == sender)
+				{
+					mnu.Checked = true;
+					this.Theme = (AppTheme) Enum.Parse(typeof(AppTheme), mnu.Text);
+				}
+				else
+				{
+					mnu.Checked = false;
+				}
+			}
 		}
 	}
 }

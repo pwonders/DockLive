@@ -31,6 +31,10 @@
 			this.components = new System.ComponentModel.Container();
 			this.contextMenu = new System.Windows.Forms.ContextMenu();
 			this.mnuSettings = new System.Windows.Forms.MenuItem();
+			this.mnuTheme = new System.Windows.Forms.MenuItem();
+			this.mnuThemeSystem = new System.Windows.Forms.MenuItem();
+			this.mnuThemeLight = new System.Windows.Forms.MenuItem();
+			this.mnuThemeDark = new System.Windows.Forms.MenuItem();
 			this.mnuSep = new System.Windows.Forms.MenuItem();
 			this.mnuExit = new System.Windows.Forms.MenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -43,6 +47,7 @@
 			// 
 			this.contextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuSettings,
+            this.mnuTheme,
             this.mnuSep,
             this.mnuExit});
 			this.contextMenu.Popup += new System.EventHandler(this.contextMenu_Popup);
@@ -53,14 +58,44 @@
 			this.mnuSettings.Text = "Settings...";
 			this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
 			// 
+			// mnuTheme
+			// 
+			this.mnuTheme.Index = 1;
+			this.mnuTheme.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuThemeSystem,
+            this.mnuThemeLight,
+            this.mnuThemeDark});
+			this.mnuTheme.Text = "Theme";
+			// 
+			// mnuThemeSystem
+			// 
+			this.mnuThemeSystem.Index = 0;
+			this.mnuThemeSystem.RadioCheck = true;
+			this.mnuThemeSystem.Text = "System";
+			this.mnuThemeSystem.Click += new System.EventHandler(this.mnuThemeName_Click);
+			// 
+			// mnuThemeLight
+			// 
+			this.mnuThemeLight.Index = 1;
+			this.mnuThemeLight.RadioCheck = true;
+			this.mnuThemeLight.Text = "Light";
+			this.mnuThemeLight.Click += new System.EventHandler(this.mnuThemeName_Click);
+			// 
+			// mnuThemeDark
+			// 
+			this.mnuThemeDark.Index = 2;
+			this.mnuThemeDark.RadioCheck = true;
+			this.mnuThemeDark.Text = "Dark";
+			this.mnuThemeDark.Click += new System.EventHandler(this.mnuThemeName_Click);
+			// 
 			// mnuSep
 			// 
-			this.mnuSep.Index = 1;
+			this.mnuSep.Index = 2;
 			this.mnuSep.Text = "-";
 			// 
 			// mnuExit
 			// 
-			this.mnuExit.Index = 2;
+			this.mnuExit.Index = 3;
 			this.mnuExit.Text = "E&xit";
 			this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
 			// 
@@ -124,6 +159,10 @@
 		private System.Windows.Forms.MenuItem mnuSep;
 		private System.Windows.Forms.Panel pnlScroller;
 		private System.Windows.Forms.TableLayoutPanel tblTiles;
+		private System.Windows.Forms.MenuItem mnuTheme;
+		private System.Windows.Forms.MenuItem mnuThemeSystem;
+		private System.Windows.Forms.MenuItem mnuThemeLight;
+		private System.Windows.Forms.MenuItem mnuThemeDark;
 	}
 }
 
