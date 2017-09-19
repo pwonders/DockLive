@@ -9,8 +9,7 @@ using pWonders.App.DockLive.TileInterface;
 namespace pWonders.App.DockLive.Tiles.Slideshow
 {
 	public enum FitMode { Fit, Fill };
-
-	[System.ComponentModel.DesignerCategory("")]
+	
 	class SlideshowControl : TileChildControl
 	{
 		public static string DefaultImagePath

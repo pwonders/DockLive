@@ -27,11 +27,13 @@ namespace pWonders.App.DockLive.TileInterface
 		string UniqueName { get; }
 		string Version { get; }
 		string Developer { get; }
+		Size DefaultSize { get; }
 		TileChildControl Control { get; }
 		TileChildControl SettingsControl { get; }
 	}
 
 	// This class isn't abstract because the VS designer can't open inherited TileChildControl that way.
+	[System.ComponentModel.DesignerCategory("")]
 	public class TileChildControl : UserControl
 	{
 		// This parameterless constructor is just to make VS designer happy.

@@ -19,6 +19,7 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		{
 			OnThemeChanged(host.Theme);
 			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width - m_Control.Margin.Vertical);
+			this.DefaultSize = m_Control.Size;
 		}
 
 		public void OnDetachTile()
@@ -68,6 +69,11 @@ namespace pWonders.App.DockLive.Tiles.Calendar
 		public string Developer
 		{
 			get { return Application.CompanyName; }
+		}
+
+		public Size DefaultSize
+		{
+			set; get;
 		}
 
 		public TileChildControl Control

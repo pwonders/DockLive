@@ -9,7 +9,6 @@ using pWonders.App.DockLive.TileInterface;
 
 namespace pWonders.App.DockLive.Tiles.Calendar
 {
-	[System.ComponentModel.DesignerCategory("")]
 	partial class CalendarControl : TileChildControl
 	{
 		public enum CalendarView { Month, Day, Year };

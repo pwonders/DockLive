@@ -18,9 +18,9 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 
 		public void OnAttachTile(ITileHost host)
 		{
-			this.Host = host;
 			OnThemeChanged(host.Theme);
 			m_Control.Size = new Size(host.FullBounds.Width - m_Control.Margin.Horizontal, host.FullBounds.Width / 2 - m_Control.Margin.Vertical);
+			this.DefaultSize = m_Control.Size;
 		}
 
 		public void OnDetachTile()
@@ -71,8 +71,6 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 			settings.Set(OPT_STAYFORSECOND, m_SettingsControl.StayForSecond.ToString());
 		}
 
-		public ITileHost Host { set; get; }
-
 		public string Name
 		{
 			get { return "Slideshow"; }
@@ -91,6 +89,11 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		public string Developer
 		{
 			get { return Application.CompanyName; }
+		}
+
+		public Size DefaultSize
+		{
+			set; get;
 		}
 
 		public TileChildControl Control
