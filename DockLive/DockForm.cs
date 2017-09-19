@@ -134,17 +134,17 @@ namespace pWonders.App.DockLive
 				SettingsManager.Load(tile.UniqueName, set);
 				tile.OnSettingsLoaded(set);
 				m_AllSettings.Add(tile.UniqueName, set);
+				if (tblTiles.RowStyles.Count <= tblTiles.Controls.Count)
+				{
+					tblTiles.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+				}
 				tblTiles.Controls.Add(tile.Control);
 				tile.OnAttachTile(this);
 				tile.Control.MouseUp += Tile_Control_MouseUp;
 			}
-			/*
-			foreach (RowStyle rs in tblTiles.RowStyles)
-			{
-				rs.SizeType = SizeType.Percent;
-				rs.Height = 1.0f / tblTiles.RowCount;
-			}
-			*/
+			// Add a dummy one to fill up the rest of space.
+			tblTiles.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+			tblTiles.Controls.Add(new Label());
 			tblTiles.ResumeLayout();
 			this.ResumeLayout();
 		}
@@ -218,6 +218,9 @@ namespace pWonders.App.DockLive
 						break;
 					}
 					block.GoBack += SettingsBlock_GoBack;
+					block.FillUp += SettingsBlock_FillUp;
+					block.FillDn += SettingsBlock_FillDn;
+					block.Remove += SettingsBlock_Remove;
 					tblTiles.Controls.Remove(ctrl);
 					tblTiles.Controls.Add(block, pos.Column, pos.Row);
 					tblTiles.ResumeLayout();
@@ -238,16 +241,38 @@ namespace pWonders.App.DockLive
 			SettingsManager.Save(block.Tile.UniqueName, m_AllSettings[block.Tile.UniqueName]);
 		}
 
-		private void pnlScroller_ClientSizeChanged(object sender, EventArgs e)
+		private void SettingsBlock_FillUp(object sender, EventArgs e)
 		{
-			if (pnlScroller.VerticalScroll.Visible)
-			{
-				pnlScroller.Width = m_FullWidth + SystemInformation.VerticalScrollBarWidth;
-			}
-			else
-			{
-				pnlScroller.Width = m_FullWidth;
-			}
+			SettingsBlock block = sender as SettingsBlock;
+			tblTiles.SuspendLayout();
+			TableLayoutPanelCellPosition pos = tblTiles.GetPositionFromControl(block);
+			tblTiles.RowStyles[tblTiles.RowStyles.Count - 1].Height = 100f;
+			tblTiles.RowStyles[pos.Row].SizeType = SizeType.AutoSize;
+			block.Tile.Control.Size = block.Tile.DefaultSize;
+			block.Tile.SettingsControl.Size = block.Tile.DefaultSize;
+			tblTiles.ResumeLayout();
+		}
+
+		private void SettingsBlock_FillDn(object sender, EventArgs e)
+		{
+			SettingsBlock block = sender as SettingsBlock;
+			tblTiles.SuspendLayout();
+			TableLayoutPanelCellPosition pos = tblTiles.GetPositionFromControl(block);
+			tblTiles.RowStyles[pos.Row].SizeType = SizeType.Percent;
+			tblTiles.RowStyles[pos.Row].Height = 100f;
+			tblTiles.RowStyles[tblTiles.RowStyles.Count - 1].Height = 0;
+			tblTiles.ResumeLayout();
+		}
+
+		private void SettingsBlock_Remove(object sender, EventArgs e)
+		{
+			SettingsBlock block = sender as SettingsBlock;
+			tblTiles.SuspendLayout();
+			TableLayoutPanelCellPosition pos = tblTiles.GetPositionFromControl(block);
+			block.Tile.OnDetachTile();
+			tblTiles.Controls.Remove(block);
+			tblTiles.RowStyles.RemoveAt(pos.Row);
+			tblTiles.ResumeLayout();
 		}
 
 		private void mnuExit_Click(object sender, EventArgs e)

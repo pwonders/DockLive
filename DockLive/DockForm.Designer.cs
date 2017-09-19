@@ -40,7 +40,6 @@
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.pnlScroller = new System.Windows.Forms.Panel();
 			this.tblTiles = new System.Windows.Forms.TableLayoutPanel();
-			this.pnlScroller.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// contextMenu
@@ -110,26 +109,24 @@
 			// 
 			this.pnlScroller.AutoScroll = true;
 			this.pnlScroller.BackColor = System.Drawing.Color.Transparent;
-			this.pnlScroller.Controls.Add(this.tblTiles);
-			this.pnlScroller.Dock = System.Windows.Forms.DockStyle.Left;
-			this.pnlScroller.Location = new System.Drawing.Point(0, 0);
+			this.pnlScroller.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pnlScroller.Location = new System.Drawing.Point(0, 755);
 			this.pnlScroller.Name = "pnlScroller";
-			this.pnlScroller.Size = new System.Drawing.Size(180, 800);
+			this.pnlScroller.Size = new System.Drawing.Size(400, 45);
 			this.pnlScroller.TabIndex = 1;
-			this.pnlScroller.ClientSizeChanged += new System.EventHandler(this.pnlScroller_ClientSizeChanged);
 			// 
 			// tblTiles
 			// 
-			this.tblTiles.AutoSize = true;
 			this.tblTiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tblTiles.BackColor = System.Drawing.Color.Transparent;
 			this.tblTiles.ColumnCount = 1;
 			this.tblTiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tblTiles.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tblTiles.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tblTiles.Location = new System.Drawing.Point(0, 0);
 			this.tblTiles.Name = "tblTiles";
 			this.tblTiles.RowCount = 1;
 			this.tblTiles.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tblTiles.Size = new System.Drawing.Size(180, 0);
+			this.tblTiles.Size = new System.Drawing.Size(400, 755);
 			this.tblTiles.TabIndex = 1;
 			// 
 			// DockForm
@@ -137,6 +134,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(168F, 168F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.ClientSize = new System.Drawing.Size(400, 800);
+			this.Controls.Add(this.tblTiles);
 			this.Controls.Add(this.pnlScroller);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(6);
@@ -144,8 +142,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.TopMost = true;
-			this.pnlScroller.ResumeLayout(false);
-			this.pnlScroller.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
