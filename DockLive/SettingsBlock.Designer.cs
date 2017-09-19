@@ -33,6 +33,8 @@
 			this.pnlMain = new System.Windows.Forms.Panel();
 			this.lblTileName = new System.Windows.Forms.Label();
 			this.tblHeader = new System.Windows.Forms.VTableLayoutPanel();
+			this.btnFillDn = new System.Windows.Forms.Label();
+			this.btnRemove = new System.Windows.Forms.Label();
 			this.tblHeader.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -40,7 +42,7 @@
 			// 
 			this.lblSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblSettings.Image = global::pWonders.App.DockLive.Properties.Resources.VSO_Settings_whiteNoHalo_16x;
-			this.lblSettings.Location = new System.Drawing.Point(525, 0);
+			this.lblSettings.Location = new System.Drawing.Point(41, 0);
 			this.lblSettings.Name = "lblSettings";
 			this.lblSettings.Size = new System.Drawing.Size(32, 32);
 			this.lblSettings.TabIndex = 1;
@@ -70,7 +72,7 @@
 			// 
 			this.lblTileName.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.lblTileName.AutoSize = true;
-			this.lblTileName.Location = new System.Drawing.Point(41, 2);
+			this.lblTileName.Location = new System.Drawing.Point(79, 2);
 			this.lblTileName.Name = "lblTileName";
 			this.lblTileName.Size = new System.Drawing.Size(0, 28);
 			this.lblTileName.TabIndex = 2;
@@ -82,12 +84,16 @@
 			this.tblHeader.AutoSize = true;
 			this.tblHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tblHeader.BackColor = System.Drawing.Color.Transparent;
-			this.tblHeader.ColumnCount = 3;
+			this.tblHeader.ColumnCount = 5;
+			this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tblHeader.Controls.Add(this.lblSettings, 2, 0);
-			this.tblHeader.Controls.Add(this.lblTileName, 1, 0);
+			this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tblHeader.Controls.Add(this.btnFillDn, 3, 0);
+			this.tblHeader.Controls.Add(this.btnRemove, 4, 0);
+			this.tblHeader.Controls.Add(this.lblSettings, 1, 0);
+			this.tblHeader.Controls.Add(this.lblTileName, 2, 0);
 			this.tblHeader.Controls.Add(this.btnBack, 0, 0);
 			this.tblHeader.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tblHeader.FixTransparency = true;
@@ -97,6 +103,28 @@
 			this.tblHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tblHeader.Size = new System.Drawing.Size(560, 32);
 			this.tblHeader.TabIndex = 1;
+			// 
+			// btnFillDn
+			// 
+			this.btnFillDn.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.btnFillDn.Location = new System.Drawing.Point(487, 0);
+			this.btnFillDn.Name = "btnFillDn";
+			this.btnFillDn.Size = new System.Drawing.Size(32, 32);
+			this.btnFillDn.TabIndex = 4;
+			this.btnFillDn.Click += new System.EventHandler(this.btnFillDn_Click);
+			this.btnFillDn.Paint += new System.Windows.Forms.PaintEventHandler(this.btnFillDn_Paint);
+			this.btnFillDn.DoubleClick += new System.EventHandler(this.btnFillDn_Click);
+			// 
+			// btnRemove
+			// 
+			this.btnRemove.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.btnRemove.Location = new System.Drawing.Point(525, 0);
+			this.btnRemove.Name = "btnRemove";
+			this.btnRemove.Size = new System.Drawing.Size(32, 32);
+			this.btnRemove.TabIndex = 3;
+			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+			this.btnRemove.Paint += new System.Windows.Forms.PaintEventHandler(this.btnRemove_Paint);
+			this.btnRemove.DoubleClick += new System.EventHandler(this.btnRemove_Click);
 			// 
 			// SettingsBlock
 			// 
@@ -119,5 +147,7 @@
 		private System.Windows.Forms.Panel pnlMain;
 		private System.Windows.Forms.Label lblTileName;
 		private System.Windows.Forms.VTableLayoutPanel tblHeader;
+		private System.Windows.Forms.Label btnRemove;
+		private System.Windows.Forms.Label btnFillDn;
 	}
 }
