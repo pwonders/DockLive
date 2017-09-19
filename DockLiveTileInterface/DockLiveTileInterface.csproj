@@ -61,4 +61,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(VisualStudioDir)/Projects/post-build.cmd" "$(ConfigurationName)" "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
