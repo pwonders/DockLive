@@ -129,6 +129,7 @@ namespace pWonders.App.DockLive.Tiles.Slideshow
 		protected override void OnClientSizeChanged(EventArgs e)
 		{
 			base.OnClientSizeChanged(e);
+			m_Changed = true;
 			ImageCacher.Clear(m_Set);
 		}
 
